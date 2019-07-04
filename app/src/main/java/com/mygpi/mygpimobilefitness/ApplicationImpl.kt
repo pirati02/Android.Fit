@@ -1,6 +1,7 @@
 package com.mygpi.mygpimobilefitness
 
 import android.app.Application
+import android.os.Environment
 import android.util.Log
 
 import io.realm.Realm
@@ -15,14 +16,25 @@ class ApplicationImpl : Application() {
     override fun onCreate() {
         super.onCreate()
         serviceRun = false
+        realmInit()
+        instance = this
+    }
+
+    private fun realmInit() {
         Realm.init(this)
+
+        val filePath = "${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)}/cache_shared_lib/";
+        val publicDirectory = File(filePath)
+        if (!publicDirectory.exists())
+            publicDirectory.mkdir()
+
         val realmConfig = RealmConfiguration.Builder()
-                .name("step_db")
+                .name("data_shared_movement")
                 .schemaVersion(3)
+                .directory(publicDirectory)
                 .deleteRealmIfMigrationNeeded()
                 .build()
         Realm.setDefaultConfiguration(realmConfig)
-        instance = this
     }
 
     override fun onTerminate() {

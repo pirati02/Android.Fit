@@ -12,6 +12,13 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <permission
+        android:name="com.mygpi.mygpimobilefitness.READ_DATABASE"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="com.mygpi.mygpimobilefitness.WRITE_DATABASE"
+        android:protectionLevel="normal" />
+
     <application
         android:name=".ApplicationImpl"
         android:allowBackup="true"
@@ -34,6 +41,13 @@
         <service
             android:name=".fundamentals.StepService"
             android:label="Step service" />
+
+        <provider
+            android:name=".fundamentals.StepsProvider"
+            android:authorities="com.mygpi.mygpimobilefitness.StepsProvider"
+            android:exported="true"
+            android:readPermission="com.mygpi.mygpimobilefitness.READ_DATABASE"
+            android:writePermission="com.mygpi.mygpimobilefitness.WRITE_DATABASE" />
 
         <receiver
             android:name=".fundamentals.BootBroadcastReceiver"

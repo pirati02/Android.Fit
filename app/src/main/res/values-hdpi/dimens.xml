@@ -10,5 +10,5 @@
     <dimen name="desctiption_text_size">15sp</dimen>
     <dimen name="center_rounder_shadow_view_margin_start">39dp</dimen>
     <dimen name="center_rounder_shadow_view_width">207dp</dimen>
-    <dimen name="center_rounder_shadow_view_height">406dp</dimen>
+    <dimen name="center_rounder_shadow_view_height">456dp</dimen>
 </resources>

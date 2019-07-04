@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.mygpi.mygpimobilefitness.ApplicationImpl
+import com.mygpi.mygpimobilefitness.R
 import com.mygpi.mygpimobilefitness.fundamentals.StepService
+import com.mygpi.mygpimobilefitness.fundamentals.StepsProvider
 import com.mygpi.mygpimobilefitness.model.StepModel
 import com.mygpi.mygpimobilefitness.today
 import io.realm.Realm
@@ -23,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.mygpi.mygpimobilefitness.R.layout.activity_main)
+        setContentView(R.layout.activity_main)
         bus = EventBus.getDefault()
         bus?.register(this)
         val realm = Realm.getDefaultInstance()
