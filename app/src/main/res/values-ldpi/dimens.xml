@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="center_rounder_view_height">426dp</dimen>
+    <dimen name="center_rounder_view_width">317dp</dimen>
+    <dimen name="app_name_top_margin">44dp</dimen>
+
+    <dimen name="desctiption_text_size">15sp</dimen>
+    <dimen name="center_rounder_shadow_view_margin_start">39dp</dimen>
+</resources>
