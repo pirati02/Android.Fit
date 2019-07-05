@@ -85,18 +85,18 @@ class StepThread(private val context: Context) : Thread(), SensorEventListener, 
 
     override fun step(num: Long) {
         if (today != Date().today()) {
-            save(today, numStpes)
+            //save(today, numStpes)
             numStpes = 0
             lastStpes = 0
             today = Date().today()
         }
         numStpes += num
         EventBus.getDefault().post(numStpes)
-        if (numStpes - lastStpes > 10) {
-            lastStpes = numStpes
-            save(today, numStpes)
-        }
-
+        //if (numStpes - lastStpes > 10) {
+        //    lastStpes = numStpes
+        //    //save(today, numStpes)
+        //}
+        save(today, numStpes)
     }
 
     private fun save(date: Date?, num: Long) {

@@ -17,7 +17,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 
 import com.mygpi.mygpimobilefitness.ApplicationImpl
-import com.mygpi.mygpimobilefitness.activity.MainActivity
 import com.mygpi.mygpimobilefitness.R
 import com.mygpi.mygpimobilefitness.api.StepThread
 
@@ -79,6 +78,16 @@ class StepService : Service() {
 
     override fun onTaskRemoved(rootIntent: Intent) {
         super.onTaskRemoved(rootIntent)
+        if (mWakeLock != null) {
+            if (mWakeLock?.isHeld == true)
+                mWakeLock?.release()
+            mWakeLock = null
+        }
+
+        stopForeground(true)
+        thread?.threadStop()
+        val app = application as ApplicationImpl
+        app.serviceRun = false
         val intent = Intent(START)
         sendBroadcast(intent)
     }
@@ -99,6 +108,7 @@ class StepService : Service() {
         super.onDestroy()
     }
 
+
     override fun onBind(intent: Intent): IBinder? {
         return null
     }
@@ -106,8 +116,8 @@ class StepService : Service() {
     @Synchronized
     private fun mWakeLock(context: Context) {
         if (mWakeLock != null) {
-            if (mWakeLock!!.isHeld)
-                mWakeLock!!.release()
+            if (mWakeLock?.isHeld ?: false)
+                mWakeLock?.release()
             mWakeLock = null
         }
 
