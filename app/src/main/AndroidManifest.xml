@@ -28,7 +28,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".fundamentals.MainActivity"
+            android:name=".component.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -38,18 +38,18 @@
         </activity>
 
         <service
-            android:name=".fundamentals.StepService"
+            android:name=".component.StepService"
             android:label="Step service" />
 
         <provider
-            android:name=".fundamentals.StepsProvider"
+            android:name=".component.StepsProvider"
             android:authorities="com.mygpi.mygpimobilefitness.StepsProvider"
             android:exported="true"
             android:readPermission="com.mygpi.mygpimobilefitness.READ_DATABASE"
             android:writePermission="com.mygpi.mygpimobilefitness.WRITE_DATABASE" />
 
         <receiver
-            android:name=".fundamentals.BootBroadcastReceiver"
+            android:name=".component.BootBroadcastReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>

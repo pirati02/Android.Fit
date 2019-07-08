@@ -1,4 +1,4 @@
-package com.mygpi.mygpimobilefitness.fundamentals
+package com.mygpi.mygpimobilefitness.component
 
 import android.annotation.SuppressLint
 import android.content.ContentProvider
@@ -7,7 +7,7 @@ import android.content.UriMatcher
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.net.Uri
-import com.mygpi.mygpimobilefitness.fundamentals.StepsProvider.StepColumns.ALL_STEPS
+import com.mygpi.mygpimobilefitness.component.StepsProvider.StepColumns.ALL_STEPS
 
 import com.mygpi.mygpimobilefitness.model.StepModel
 

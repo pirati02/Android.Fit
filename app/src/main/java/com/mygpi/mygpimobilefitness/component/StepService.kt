@@ -1,4 +1,4 @@
-package com.mygpi.mygpimobilefitness.fundamentals
+package com.mygpi.mygpimobilefitness.component
 
 import android.annotation.SuppressLint
 import android.app.Notification
@@ -16,7 +16,6 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 
-import com.mygpi.mygpimobilefitness.ApplicationImpl
 import com.mygpi.mygpimobilefitness.R
 import com.mygpi.mygpimobilefitness.api.StepThread
 
@@ -33,8 +32,6 @@ class StepService : Service() {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        val app = application as ApplicationImpl
-        app.serviceRun = true
         if (thread?.state == Thread.State.NEW)
             thread?.start()
 
@@ -56,7 +53,7 @@ class StepService : Service() {
                     "step_counter_channel_id", NotificationManager.IMPORTANCE_DEFAULT)
             stepCounterChannel.enableVibration(true)
             stepCounterChannel.lightColor = Color.RED
-            stepCounterChannel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+            stepCounterChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
             channelId = stepCounterChannel.id
             notificationManager.createNotificationChannel(stepCounterChannel)
         }
@@ -86,9 +83,7 @@ class StepService : Service() {
 
         stopForeground(true)
         thread?.threadStop()
-        val app = application as ApplicationImpl
-        app.serviceRun = false
-        val intent = Intent(START)
+        val intent = Intent(this, BootBroadcastReceiver::class.java).apply { action = START }
         sendBroadcast(intent)
     }
 
@@ -101,9 +96,7 @@ class StepService : Service() {
 
         stopForeground(true)
         thread?.threadStop()
-        val app = application as ApplicationImpl
-        app.serviceRun = false
-        val intent = Intent(START)
+        val intent = Intent(this, BootBroadcastReceiver::class.java).apply { action = START }
         sendBroadcast(intent)
         super.onDestroy()
     }
@@ -116,17 +109,15 @@ class StepService : Service() {
     @Synchronized
     private fun mWakeLock(context: Context) {
         if (mWakeLock != null) {
-            if (mWakeLock?.isHeld ?: false)
+            if (mWakeLock?.isHeld == true)
                 mWakeLock?.release()
             mWakeLock = null
         }
 
-        val mgr = context
-                .getSystemService(Context.POWER_SERVICE) as PowerManager
-        mWakeLock = mgr.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-                StepService::class.java.name)
+        val mgr = context.getSystemService(Context.POWER_SERVICE) as PowerManager
+        mWakeLock = mgr.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, StepService::class.java.name)
         mWakeLock?.setReferenceCounted(true)
-        mWakeLock?.acquire(10 * 60 * 1000L)
+        mWakeLock?.acquire(1000L)
     }
 
     companion object {

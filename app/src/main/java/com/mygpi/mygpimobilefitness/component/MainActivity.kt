@@ -1,10 +1,8 @@
-package com.mygpi.mygpimobilefitness.fundamentals
+package com.mygpi.mygpimobilefitness.component
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.mygpi.mygpimobilefitness.ApplicationImpl
 import com.mygpi.mygpimobilefitness.R
 import com.mygpi.mygpimobilefitness.model.StepModel
 import com.mygpi.mygpimobilefitness.round
