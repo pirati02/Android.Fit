@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyGPI Fit</string>
+    <string name="app_name">MyGPI Steps</string>
 
     <string name="action_settings">Settings</string>
     <string name="setting">&#x3434;</string>
@@ -7,4 +7,7 @@
     <string name="todays_steps">დღევანდელი შედეგი</string>
     <string name="mygpi">MyGPI</string>
     <string name="zero">0</string>
+    <string name="description">MyGpi Steps ითვლის შენს გავლილ ნაბიჯებს. გაიარე დღეში 10,000 ნაბიჯი და დააგროვე ეკომონეტებით.</string>
+    <string name="today_s_steps">Today\'s Steps</string>
+    <string name="today_at_11_41_am">Today</string>
 </resources>

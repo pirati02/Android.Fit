@@ -7,4 +7,10 @@
 
     <color name="colorBackground">#FEFEFE</color>
     <color name="colorBackground_2">#eaf4fc</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorDefault">#292562</color>
+    <color name="colorPink">#EE2A7B</color>
+    <color name="colorPinkDark">#c92066</color>
+    <color name="colorGray">#929292</color>
+    <color name="colorGrayDark">#646464</color>
 </resources>

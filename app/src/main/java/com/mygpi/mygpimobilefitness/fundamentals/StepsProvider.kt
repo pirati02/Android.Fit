@@ -33,22 +33,26 @@ class StepsProvider : ContentProvider() {
     override fun query(uri: Uri, projection: Array<String>?, selection: String?, selectionArgs: Array<String>?, sortOrder: String?): Cursor? {
         val realm = Realm.getDefaultInstance()
         val match = uriMatcher.match(uri)
-        val stepsCursor = MatrixCursor(arrayOf("numSteps", "date"))
+        val stepsCursor = MatrixCursor(arrayOf("numSteps", "startDate", "endDate"))
         realm.use {
             when (match) {
                 ALL_STEPS -> {
                     var realmTask: RealmResults<StepModel>? = null
                     if (uri.pathSegments?.size!! > 0) {
-                        val startDate = SimpleDateFormat("dd-MM-yyyy").parse(uri.pathSegments[1])
-                        val endDate = SimpleDateFormat("dd-MM-yyyy").parse(uri.pathSegments[2])
-                        realmTask = if (startDate != null || endDate != null)
-                            it.where(StepModel::class.java).between("date", startDate, endDate).findAll()
+                        val startDateParam = SimpleDateFormat("dd-MM-yyyy").parse(uri.pathSegments[1])
+                        val endDateParam = SimpleDateFormat("dd-MM-yyyy").parse(uri.pathSegments[2])
+                        realmTask = if (startDateParam != null || endDateParam != null)
+                            it.where(StepModel::class.java)
+                                    .greaterThanOrEqualTo("startDate", startDateParam)
+                                    .lessThanOrEqualTo("endDate", endDateParam)
+                                    .findAll()
                         else
                             it.where(StepModel::class.java).findAll()
 
                         for (result in realmTask) {
-                            val date = SimpleDateFormat("dd-MM-yyyy").format(result.date!!).toString()
-                            val rowData = arrayOf<Any>(result.numSteps, date)
+                            val startDate = SimpleDateFormat("dd-MM-yyyy").format(result.startDate!!).toString()
+                            val endDate = SimpleDateFormat("dd-MM-yyyy").format(result.endDate!!).toString()
+                            val rowData = arrayOf<Any>(result.numSteps, startDate, endDate)
                             stepsCursor.addRow(rowData)
                         }
                     }

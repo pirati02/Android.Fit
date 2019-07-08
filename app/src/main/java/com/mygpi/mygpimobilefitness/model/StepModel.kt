@@ -7,7 +7,10 @@ import io.realm.annotations.Index
 
 open class StepModel : RealmObject() {
     @Index
-    var date: Date? = null
+    var startDate: Date? = null
+        internal set
+    @Index
+    var endDate: Date? = null
         internal set
     var numSteps: Long = 0
         internal set

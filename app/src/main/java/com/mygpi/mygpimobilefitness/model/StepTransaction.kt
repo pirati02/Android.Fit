@@ -6,16 +6,20 @@ import java.util.Date
 
 import io.realm.Realm
 
-class StepTransaction(private val date: Date?, private val num: Long) : Realm.Transaction {
+class StepTransaction(private val startDate: Date?, private val endDate: Date?, private val num: Long, private val update: Boolean = false) : Realm.Transaction {
 
     override fun execute(realm: Realm?) {
-        var stepModel = realm?.where(StepModel::class.java)?.equalTo("date", date)?.findFirst()
+        val stepModel: StepModel?
 
-        if (stepModel == null)
+        if (!update)
             stepModel = realm?.createObject(StepModel::class.java)
+        else
+            stepModel = realm?.where(StepModel::class.java)?.equalTo("startDate", startDate)?.findFirst()
+
         stepModel?.let {
-            it.date = date
-            it.numSteps = num
+            it.startDate = startDate
+            it.endDate = endDate
+            it.numSteps += num
         }
     }
 }

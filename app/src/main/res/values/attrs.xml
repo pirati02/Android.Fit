@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="WeatherChartView">
-        <attr name="textColor" format="color" />
-        <attr name="dayColor" format="color" />
-        <attr name="nightColor" format="color" />
-        <attr name="textSize" format="dimension" />
-    </declare-styleable>
     <declare-styleable name="RoundedView">
         <attr name="radius" format="dimension" />
         <attr name="fillColor" format="color" />
         <attr name="start_color" format="color" />
         <attr name="end_color" format="color" />
         <attr name="center_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="CircleProgressView">
+        <attr name="progress" format="integer" />
+        <attr name="secondaryProgress" format="integer" />
+        <attr name="progressColor" format="color" />
+        <attr name="secondaryProgressColor" format="color" />
+        <attr name="backgroundColor" format="color" />
+        <attr name="strokeWidth" format="dimension" />
     </declare-styleable>
 </resources>

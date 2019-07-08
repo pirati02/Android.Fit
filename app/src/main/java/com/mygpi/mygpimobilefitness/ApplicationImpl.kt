@@ -23,15 +23,14 @@ class ApplicationImpl : Application() {
     private fun realmInit() {
         Realm.init(this)
 
-        val filePath = "${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)}/cache_shared_lib/";
-        val publicDirectory = File(filePath)
-        if (!publicDirectory.exists())
-            publicDirectory.mkdir()
+        //val filePath = "${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)}/cache_shared_lib/";
+        //val publicDirectory = File(filePath)
+        //if (!publicDirectory.exists())
+        //    publicDirectory.mkdir()
 
         val realmConfig = RealmConfiguration.Builder()
                 .name("data_shared_movement")
                 .schemaVersion(3)
-                .directory(publicDirectory)
                 .deleteRealmIfMigrationNeeded()
                 .build()
         Realm.setDefaultConfiguration(realmConfig)

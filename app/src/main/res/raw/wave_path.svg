@@ -1,0 +1,19 @@
+<svg height="60"
+    viewBox="0 0 375.016 60"
+    width="375.016"
+    xmlns="http://www.w3.org/2000/svg">
+    <g
+        id="WavePath"
+        transform="translate(0 -366)">
+        <path
+            d="M0,576.251l375.016-.015v51.142c-9.021-1.967-95.3-8.547-166.2.015-61.985,7.486-130.916,13.1-208.819,0Z"
+            fill="#353077"
+            id="Path_270"
+            transform="translate(0 -209.251)" />
+        <path
+            d="M0,0H375V1H0Z"
+            fill="#474283"
+            id="Path_271"
+            transform="translate(0 366)" />
+    </g>
+</svg>
