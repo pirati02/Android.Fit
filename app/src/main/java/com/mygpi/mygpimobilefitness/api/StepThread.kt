@@ -48,22 +48,22 @@ class StepThread(private val context: Context) : Thread(), SensorEventListener, 
         accel = sensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
         today = Date().today()
-        val realm = Realm.getDefaultInstance()
-        val result = realm.where(StepModel::class.java)
-                .equalTo("startDate", today)
-                .findFirst()
-        numSteps =result?.numSteps ?: 0
-        realm.close()
+        //val realm = Realm.getDefaultInstance()
+        //val result = realm.where(StepModel::class.java)
+        //        .equalTo("startDate", today)
+        //        .findFirst()
+        //numSteps =result?.numSteps ?: 0
+        //realm.close()
 
         SessionManager.startSession(numSteps, false)
-        if (!EventBus.getDefault().isRegistered(this))
-            EventBus.getDefault().register(this)
+        //if (!EventBus.getDefault().isRegistered(this))
+        //    EventBus.getDefault().register(this)
     }
 
     @Subscribe
     fun subscribeActivity(stopped: Boolean?) {
         //if (stopped!!)
-        EventBus.getDefault().post(numSteps)
+        //EventBus.getDefault().post(numSteps)
         //else
         //    save(Date().today(), numSteps)
     }

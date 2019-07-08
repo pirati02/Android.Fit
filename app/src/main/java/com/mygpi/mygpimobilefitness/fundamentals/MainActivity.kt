@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                 .findAll()
 
         numSteps = (stepResult?.sum("numSteps") ?: 0.0).toDouble()
-        bus?.post(true)
+        //bus?.post(true)
         realm.close()
         startService()
 
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        bus?.post(false)
+        //bus?.post(false)
         if (bus?.isRegistered(this) == true)
             bus?.unregister(this)
     }
