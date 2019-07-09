@@ -50,8 +50,8 @@ class StepsProvider : ContentProvider() {
                             it.where(StepModel::class.java).findAll()
 
                         for (result in realmTask) {
-                            val startDate = SimpleDateFormat("dd-MM-yyyy").format(result.startDate!!).toString()
-                            val endDate = SimpleDateFormat("dd-MM-yyyy").format(result.endDate!!).toString()
+                            val startDate = SimpleDateFormat("dd-MM-yyyy HH:mm").format(result.startDateTime!!).toString()
+                            val endDate = SimpleDateFormat("dd-MM-yyyy HH:mm").format(result.endDateTime!!).toString()
                             val rowData = arrayOf<Any>(result.numSteps, startDate, endDate)
                             stepsCursor.addRow(rowData)
                         }

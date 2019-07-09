@@ -5,6 +5,7 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import com.mygpi.mygpimobilefitness.dayOnly
 import com.mygpi.mygpimobilefitness.model.StepModel
 import com.mygpi.mygpimobilefitness.today
 import io.realm.Realm
@@ -47,25 +48,8 @@ class StepThread(private val context: Context) : Thread(), SensorEventListener, 
         sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         accel = sensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
-        today = Date().today()
-        //val realm = Realm.getDefaultInstance()
-        //val result = realm.where(StepModel::class.java)
-        //        .equalTo("startDate", today)
-        //        .findFirst()
-        //numSteps =result?.numSteps ?: 0
-        //realm.close()
-
+        today = Date().today()?.dayOnly()
         SessionManager.startSession(numSteps, false)
-        //if (!EventBus.getDefault().isRegistered(this))
-        //    EventBus.getDefault().register(this)
-    }
-
-    @Subscribe
-    fun subscribeActivity(stopped: Boolean?) {
-        //if (stopped!!)
-        //EventBus.getDefault().post(numSteps)
-        //else
-        //    save(Date().today(), numSteps)
     }
 
     override fun onSensorChanged(sensorEvent: SensorEvent) {
@@ -85,11 +69,10 @@ class StepThread(private val context: Context) : Thread(), SensorEventListener, 
         } else
             SessionManager.startSession(num, true)
 
-        if (today != Date().today()) {
-            //save(today, numSteps)
+        if (today != Date().today()?.dayOnly()) {
             numSteps = 0
             lastSteps = 0
-            today = Date().today()
+            today = Date().today()?.dayOnly()
         }
         numSteps += num
         EventBus.getDefault().post(num)

@@ -38,12 +38,12 @@ object SessionManager {
 
     fun sessionExpired(): Boolean {
         return if (startTime == null) true
-        else return counter > 10
+        else return counter > 20
     }
 
     fun update(num: Long) {
         counter = 0
-        save(startTime!!, null, num)
+        save(startTime!!, Date().today(), num)
     }
 
     private fun save(startDate: Date?, endDate: Date?, num: Long, update: Boolean = true) {

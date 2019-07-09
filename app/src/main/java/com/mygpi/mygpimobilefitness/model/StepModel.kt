@@ -12,6 +12,14 @@ open class StepModel : RealmObject() {
     @Index
     var endDate: Date? = null
         internal set
+
+    @Index
+    var startDateTime: Date? = null
+        internal set
+    @Index
+    var endDateTime: Date? = null
+        internal set
+
     var numSteps: Long = 0
         internal set
 }

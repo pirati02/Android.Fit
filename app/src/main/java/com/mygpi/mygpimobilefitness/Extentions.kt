@@ -5,7 +5,9 @@ import java.util.Date
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
-fun Date.today(): Date? = Date(this.year, this.month, this.date)
+fun Date.today(): Date? = Calendar.getInstance().time
+
+fun Date.dayOnly(): Date? = Date(this.year, this.month, this.date)
 
 fun Date.getBeforeSeventhDate(): Date? {
     val calendar = Calendar.getInstance()

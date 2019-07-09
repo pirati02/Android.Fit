@@ -1,6 +1,7 @@
 package com.mygpi.mygpimobilefitness.api
 
 import java.math.BigDecimal
+import kotlin.math.sqrt
 
 internal class StepDetector(private val stepListener: StepListener) {
     private val initVel = 1.1f
@@ -44,14 +45,14 @@ internal class StepDetector(private val stepListener: StepListener) {
             return
         lastStepTime = curTime
 
-        val b = BigDecimal(Math.sqrt((x * x + y * y + z * z).toDouble()))
+        val b = BigDecimal(sqrt((x * x + y * y + z * z).toDouble()))
         val vel = b.setScale(2, BigDecimal.ROUND_DOWN).toFloat()
 
         if (lastVel == 0f)
             lastVel = vel
 
-        val MAX_VEL = 60f
-        val MIN_VEL = 10f
+        val MAX_VEL = 50f
+        val MIN_VEL = 15f
         if (vel < MIN_VEL || vel > MAX_VEL) {
             initStepDetector()
             return
