@@ -12,18 +12,24 @@ import android.graphics.Color
 import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
+import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 
 import com.mygpi.mygpimobilefitness.R
+import com.mygpi.mygpimobilefitness.api.BaseCalculator
 import com.mygpi.mygpimobilefitness.api.StepThread
+import com.mygpi.mygpimobilefitness.round
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 @SuppressLint("Registered")
 class StepService : Service() {
     private var thread: StepThread? = null
     private var mWakeLock: PowerManager.WakeLock? = null
     private var startedForeground: Boolean = false
+    private var kilometersCount = 0.0
 
     override fun onCreate() {
         super.onCreate()
@@ -36,16 +42,19 @@ class StepService : Service() {
             thread?.start()
 
         if (!startedForeground) {
-            startForeground()
             mWakeLock(this)
             startedForeground = true
+            thread?.onStep = {
+                startForeground(it)
+            }
+            thread?.invokeOnStep()
         }
 
         return START_STICKY
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    fun startForeground() {
+    fun startForeground(stepCount: Long) {
         var channelId = ""
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -58,10 +67,21 @@ class StepService : Service() {
             notificationManager.createNotificationChannel(stepCounterChannel)
         }
 
+        val notificationLayout = RemoteViews(packageName, R.layout.notification_layout)
+        val notificationLayoutExpanded = RemoteViews(packageName, R.layout.notification_layout)
+
+        kilometersCount += BaseCalculator.calculateKilometers(stepCount)
+        notificationLayout.setTextViewText(R.id.notificationStepCount, "${getString(R.string.steps_)} $stepCount")
+        notificationLayout.setTextViewText(R.id.notificationKmCount, "${getString(R.string.km_s)} ${kilometersCount.round(2)}")
+
+        notificationLayoutExpanded.setTextViewText(R.id.notificationStepCount, "${getString(R.string.steps_)} $stepCount")
+        notificationLayoutExpanded.setTextViewText(R.id.notificationKmCount, "${getString(R.string.km_s)} ${kilometersCount.round(2)}")
+
         val mBuilder = NotificationCompat.Builder(this, channelId)
+                .setStyle(NotificationCompat.DecoratedCustomViewStyle())
+                .setCustomContentView(notificationLayout)
+                .setCustomBigContentView(notificationLayoutExpanded)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("step")
-                .setContentText("service is running")
 
         val notificationIntent = Intent(this, MainActivity::class.java)
         val stackBuilder = TaskStackBuilder.create(this)

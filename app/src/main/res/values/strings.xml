@@ -2,13 +2,14 @@
     <string name="app_name">MyGPI Steps</string>
 
     <string name="action_settings">Settings</string>
-    <string name="setting">&#x3434;</string>
     <string name="permission_denied_explanation">permission denied explanation</string>
-    <string name="todays_steps">დღევანდელი შედეგი</string>
+    <string name="todays_steps">Today result</string>
     <string name="mygpi">MyGPI</string>
     <string name="zero">0</string>
-    <string name="description">MyGPI Steps ითვლის შენს გავლილ ნაბიჯებს. გაიარე დღეში 10,000 ნაბიჯი და დააგროვე ეკომონეტებით.</string>
+    <string name="description">MyGPI Steps calculates your completed steps. Go through 10,000 steps a day and get them together.</string>
     <string name="today_s_steps">Today\'s Steps</string>
     <string name="today_at_11_41_am">Today at </string>
     <string name="km">Km</string>
+    <string name="steps_" translatable="false">Steps :</string>
+    <string name="km_s" translatable="false">KM\'s :</string>
 </resources>

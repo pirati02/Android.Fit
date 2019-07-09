@@ -17,6 +17,7 @@ import java.util.Date
 
 class StepThread(private val context: Context) : Thread(), SensorEventListener, StepListener {
 
+    var onStep: ((step: Long) -> Unit)? = null
     private var sensorManager: SensorManager? = null
     private var accel: Sensor? = null
     private var stepDetector: StepDetector? = null
@@ -47,9 +48,9 @@ class StepThread(private val context: Context) : Thread(), SensorEventListener, 
         stepDetector = StepDetector(this)
         sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         accel = sensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-
         today = Date().today()?.dayOnly()
-        SessionManager.startSession(numSteps, false)
+        SessionManager.startSession(0, false)
+        numSteps = BaseCalculator.currentSteps(Realm.getDefaultInstance()).toLong()
     }
 
     override fun onSensorChanged(sensorEvent: SensorEvent) {
@@ -76,5 +77,10 @@ class StepThread(private val context: Context) : Thread(), SensorEventListener, 
         }
         numSteps += num
         EventBus.getDefault().post(num)
+        onStep?.invoke(numSteps)
+    }
+
+    fun invokeOnStep() {
+        onStep?.invoke(numSteps)
     }
 }

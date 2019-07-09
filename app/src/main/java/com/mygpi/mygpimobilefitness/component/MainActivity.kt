@@ -5,18 +5,18 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.mygpi.mygpimobilefitness.R
+import com.mygpi.mygpimobilefitness.api.BaseCalculator
 import com.mygpi.mygpimobilefitness.dayOnly
 import com.mygpi.mygpimobilefitness.model.StepModel
 import com.mygpi.mygpimobilefitness.round
 import com.mygpi.mygpimobilefitness.today
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_main.showSteps
-import kotlinx.android.synthetic.main.activity_main_2.*
+import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
@@ -34,19 +34,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_2)
+        setContentView(R.layout.activity_main)
         bus = EventBus.getDefault()
         if (bus?.isRegistered(this) == false)
             bus?.register(this)
         val realm = Realm.getDefaultInstance()
-        val stepResult = realm.where(StepModel::class.java)
-                .equalTo("startDate", Date().today()?.dayOnly())
-                .findAll()
-
-        numSteps = (stepResult?.sum("numSteps") ?: 0.0).toDouble()
+        numSteps = BaseCalculator.currentSteps(realm)
         realm.close()
         startService()
-
         circularProgress.maxProgress = 100.0
     }
 
@@ -56,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun calculateKilometers() {
-        kilometersCount += (numSteps / 100000)
+        kilometersCount += BaseCalculator.calculateKilometers(numSteps.toLong())
         wentKilometersCount?.apply {
             text = kilometersCount.round(2).toString()
         }
@@ -64,28 +59,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun calculateTimes() {
-        //val realm = Realm.getDefaultInstance()
-        //val stepResult = realm.where(StepModel::class.java)
-        //        .equalTo("startDate", Date().today()?.dayOnly())
-        //        .findAll()
-//
-        //val stepTime = stepResult.map { it.endDateTime?.time!! - it.startDateTime?.time!! }.sum()
-        //val days = TimeUnit.MILLISECONDS.toDays(stepTime)
-        //val hours = TimeUnit.MILLISECONDS.toHours(stepTime)
-        //val minutes = TimeUnit.MILLISECONDS.toMinutes(stepTime)
-        //val formattedString = StringBuffer()
-        //formattedString.append(getString(R.string.today_at_11_41_am))
-        //if (days > 1) {
-        //    formattedString.append("0$days")
-        //    formattedString.append(":")
-        //}
-        //formattedString.append(if (hours > 9) hours.toString() else "0$hours")
-        //formattedString.append(":")
-        //formattedString.append(if (minutes > 9) minutes.toString() else "0$minutes")
-//
-        //wasASleep?.apply {
-        //    text = formattedString.toString()
-        //}
+        //val string = BaseCalculator.calculateTimes(getString(R.string.today_at_11_41_am))
     }
 
     private fun startService() {
