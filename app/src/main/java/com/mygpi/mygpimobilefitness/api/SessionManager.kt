@@ -23,6 +23,10 @@ object SessionManager {
             counter = 0
             save(startTime, Date().today(), num, false)
             startTime = null
+            if (interval != null && interval?.isDisposed == false) {
+                interval?.dispose()
+                interval = null
+            }
         }
 
         if (startTime == null) {
