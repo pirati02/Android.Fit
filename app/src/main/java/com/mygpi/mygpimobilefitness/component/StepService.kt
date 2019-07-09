@@ -70,7 +70,7 @@ class StepService : Service() {
         val notificationLayout = RemoteViews(packageName, R.layout.notification_layout)
         val notificationLayoutExpanded = RemoteViews(packageName, R.layout.notification_layout)
 
-        kilometersCount += BaseCalculator.calculateKilometers(stepCount)
+        kilometersCount = BaseCalculator.calculateKilometers(stepCount)
         notificationLayout.setTextViewText(R.id.notificationStepCount, "${getString(R.string.steps_)} $stepCount")
         notificationLayout.setTextViewText(R.id.notificationKmCount, "${getString(R.string.km_s)} ${kilometersCount.round(2)}")
 

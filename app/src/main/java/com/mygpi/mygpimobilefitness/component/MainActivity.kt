@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun calculateKilometers() {
-        kilometersCount += BaseCalculator.calculateKilometers(numSteps.toLong())
+        kilometersCount = BaseCalculator.calculateKilometers(numSteps.toLong())
         wentKilometersCount?.apply {
             text = kilometersCount.round(2).toString()
         }
