@@ -1,4 +1,4 @@
-package ge.dev.baqari.api.notification
+package ge.dev.baqari.fit.api.notification
 
 import android.annotation.SuppressLint
 import android.app.Notification

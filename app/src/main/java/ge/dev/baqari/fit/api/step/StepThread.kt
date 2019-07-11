@@ -1,12 +1,12 @@
-package ge.dev.baqari.api.step
+package ge.dev.baqari.fit.api.step
 
 import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import ge.dev.baqari.dayOnly
-import ge.dev.baqari.today
+import ge.dev.baqari.fit.dayOnly
+import ge.dev.baqari.fit.today
 import io.realm.Realm
 
 import org.greenrobot.eventbus.EventBus

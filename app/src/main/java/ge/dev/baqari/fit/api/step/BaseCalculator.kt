@@ -1,8 +1,8 @@
-package ge.dev.baqari.api.step
+package ge.dev.baqari.fit.api.step
 
-import ge.dev.baqari.dayOnly
-import ge.dev.baqari.model.StepModel
-import ge.dev.baqari.today
+import ge.dev.baqari.fit.dayOnly
+import ge.dev.baqari.fit.model.StepModel
+import ge.dev.baqari.fit.today
 import io.realm.Realm
 import java.util.*
 import java.util.concurrent.TimeUnit

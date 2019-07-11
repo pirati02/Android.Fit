@@ -1,4 +1,4 @@
-package ge.dev.baqari.widget;
+package ge.dev.baqari.fit.widget;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;

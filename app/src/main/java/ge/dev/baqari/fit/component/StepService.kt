@@ -1,4 +1,4 @@
-package ge.dev.baqari.component
+package ge.dev.baqari.fit.component
 
 import android.annotation.SuppressLint
 import android.app.Notification
@@ -17,11 +17,11 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
 import androidx.core.content.ContextCompat
+import ge.dev.baqari.fit.R
 
-import com.dev.baqari.R
-import ge.dev.baqari.api.step.BaseCalculator
-import ge.dev.baqari.api.step.StepThread
-import ge.dev.baqari.round
+import ge.dev.baqari.fit.api.step.BaseCalculator
+import ge.dev.baqari.fit.api.step.StepThread
+import ge.dev.baqari.fit.round
 
 @SuppressLint("Registered")
 class StepService : Service() {

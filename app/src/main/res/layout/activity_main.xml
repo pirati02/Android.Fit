@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
-    <ge.dev.baqari.widget.RoundedView
+    <ge.dev.baqari.fit.widget.RoundedView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:center_color="@color/colorBackground"
@@ -78,7 +78,7 @@
         app:layout_constraintVertical_bias="0.056"
         app:srcCompat="@drawable/rectangle" />
 
-    <ge.dev.baqari.widget.RoundedView
+    <ge.dev.baqari.fit.widget.RoundedView
         android:id="@+id/roundedView"
         android:layout_width="@dimen/center_rounder_view_width"
         android:layout_height="@dimen/center_rounder_view_height"
@@ -115,13 +115,14 @@
         android:id="@+id/progressBar"
         style="@style/ProgressBarStyle"
         android:layout_width="220dp"
+        android:max="100"
         android:layout_height="220dp"
         android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="@+id/roundedView"
         app:layout_constraintStart_toStartOf="@+id/roundedView"
         app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
 
-    <ge.dev.baqari.widget.RoundedView
+    <ge.dev.baqari.fit.widget.RoundedView
         android:id="@+id/roundedView2"
         android:layout_width="200dp"
         android:layout_height="200dp"

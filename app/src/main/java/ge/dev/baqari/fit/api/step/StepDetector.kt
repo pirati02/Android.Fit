@@ -1,4 +1,4 @@
-package ge.dev.baqari.api.step
+package ge.dev.baqari.fit.api.step
 
 import java.math.BigDecimal
 import kotlin.math.abs

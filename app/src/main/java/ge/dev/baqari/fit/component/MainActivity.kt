@@ -1,16 +1,17 @@
-package ge.dev.baqari.component
+package ge.dev.baqari.fit.component
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.dev.baqari.R
-import ge.dev.baqari.api.step.BaseCalculator
+import ge.dev.baqari.fit.R
+import ge.dev.baqari.fit.api.step.BaseCalculator
 import io.realm.Realm
-import kotlinx.android.synthetic.main.activity_main.showSteps
+import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import kotlin.math.roundToInt
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,10 +21,8 @@ class MainActivity : AppCompatActivity() {
         set(value) {
             field = value
             showSteps?.text = value.toLong().toString()
-            calculateKilometers()
-            calculateTimes()
+            //progressBar.progress = (value * 100 / 10000).roundToInt()
         }
-    private var kilometersCount = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,15 +37,6 @@ class MainActivity : AppCompatActivity() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun updateSteps(num: Long?) {
         numSteps = num?.toDouble()!!
-    }
-
-    private fun calculateKilometers() {
-        //kilometersCount = BaseCalculator.calculateKilometers(numSteps.toLong())
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun calculateTimes() {
-        //val string = BaseCalculator.calculateTimes(getString(R.string.today_at_11_41_am))
     }
 
     private fun startService() {

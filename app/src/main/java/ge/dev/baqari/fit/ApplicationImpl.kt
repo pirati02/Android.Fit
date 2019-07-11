@@ -1,4 +1,4 @@
-package ge.dev.baqari
+package ge.dev.baqari.fit
 
 import android.app.Application
 

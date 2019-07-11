@@ -1,4 +1,4 @@
-package ge.dev.baqari.model
+package ge.dev.baqari.fit.model
 
 import io.realm.Realm
 import io.realm.RealmAsyncTask

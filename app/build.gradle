@@ -7,7 +7,7 @@ apply plugin: 'realm-android'
 android {
     compileSdkVersion 29
     defaultConfig {
-        applicationId "com.mygpi.mygpimobilefitness"
+        applicationId "ge.dev.baqari.fit"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1

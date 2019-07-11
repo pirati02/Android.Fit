@@ -1,4 +1,4 @@
-package ge.dev.baqari.component
+package ge.dev.baqari.fit.component
 
 import android.annotation.SuppressLint
 import android.content.ContentProvider
@@ -7,9 +7,9 @@ import android.content.UriMatcher
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.net.Uri
-import ge.dev.baqari.component.StepsProvider.StepColumns.ALL_STEPS
+import ge.dev.baqari.fit.component.StepsProvider.StepColumns.ALL_STEPS
 
-import ge.dev.baqari.model.StepModel
+import ge.dev.baqari.fit.model.StepModel
 
 import io.realm.Realm
 import io.realm.RealmResults
@@ -43,13 +43,13 @@ class StepsProvider : ContentProvider() {
                         val endDateParam = SimpleDateFormat("dd-MM-yyyy").parse(uri.pathSegments[2])
                         realmTask = if (startDateParam != null || endDateParam != null)
                             it.where(StepModel::class.java)
-                                    .greaterThanOrEqualTo("startDate", startDateParam)
-                                    .lessThanOrEqualTo("endDate", endDateParam)
+                                    .greaterThanOrEqualTo("startDate", startDateParam!!)
+                                    .lessThanOrEqualTo("endDate", endDateParam!!)
                                     .findAll()
                         else
                             it.where(StepModel::class.java).findAll()
 
-                        for (result in realmTask) {
+                        realmTask.forEach { result ->
                             val startDate = SimpleDateFormat("dd-MM-yyyy HH:mm").format(result.startDateTime!!).toString()
                             val endDate = SimpleDateFormat("dd-MM-yyyy HH:mm").format(result.endDateTime!!).toString()
                             val rowData = arrayOf<Any>(result.numSteps, startDate, endDate)

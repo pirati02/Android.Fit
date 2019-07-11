@@ -1,4 +1,4 @@
-package ge.dev.baqari.widget
+package ge.dev.baqari.fit.widget
 
 import android.annotation.TargetApi
 import android.content.Context
@@ -8,7 +8,7 @@ import android.os.Build
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import androidx.annotation.RequiresApi
-import com.dev.baqari.R
+import ge.dev.baqari.fit.R
 
 @TargetApi(Build.VERSION_CODES.N)
 @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)

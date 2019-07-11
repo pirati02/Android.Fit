@@ -1,4 +1,4 @@
-package ge.dev.baqari.component
+package ge.dev.baqari.fit.component
 
 import android.content.BroadcastReceiver
 import android.content.Context

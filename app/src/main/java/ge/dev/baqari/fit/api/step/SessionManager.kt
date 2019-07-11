@@ -1,8 +1,8 @@
-package ge.dev.baqari.api.step
+package ge.dev.baqari.fit.api.step
 
-import ge.dev.baqari.model.StepTransaction
-import ge.dev.baqari.model.SuccessTransaction
-import ge.dev.baqari.today
+import ge.dev.baqari.fit.model.StepTransaction
+import ge.dev.baqari.fit.model.SuccessTransaction
+import ge.dev.baqari.fit.today
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
