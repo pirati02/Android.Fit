@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.mygpi.mygpimobilefitness">
+    package="ge.dev.baqari">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <permission
-        android:name="com.mygpi.mygpimobilefitness.READ_DATABASE"
+        android:name="com.dev.baqari.READ_DATABASE"
         android:protectionLevel="normal" />
     <permission
-        android:name="com.mygpi.mygpimobilefitness.WRITE_DATABASE"
+        android:name="com.dev.baqari.WRITE_DATABASE"
         android:protectionLevel="normal" />
 
     <application
@@ -46,7 +43,7 @@
 
         <provider
             android:name=".component.StepsProvider"
-            android:authorities="com.mygpi.mygpimobilefitness.StepsProvider"
+            android:authorities="com.dev.baqari.StepsProvider"
             android:exported="true"
             android:readPermission="com.mygpi.mygpimobilefitness.READ_DATABASE"
             android:writePermission="com.mygpi.mygpimobilefitness.WRITE_DATABASE" />

@@ -1,12 +1,11 @@
 <resources>
-    <string name="app_name">MyGPI Steps</string>
+    <string name="app_name">MyFit</string>
 
     <string name="action_settings">Settings</string>
     <string name="permission_denied_explanation">permission denied explanation</string>
     <string name="todays_steps">Today result</string>
-    <string name="mygpi">MyGPI</string>
+    <string name="mygpi">MyFIT</string>
     <string name="zero">0</string>
-    <string name="description">MyGPI Steps calculates your completed steps. Go through 10,000 steps a day and get them together.</string>
     <string name="today_s_steps">Today\'s Steps</string>
     <string name="today_at_11_41_am">Today at </string>
     <string name="km">Km</string>

@@ -5,9 +5,8 @@
     <string name="action_settings">პარამეტრები</string>
     <string name="permission_denied_explanation">permission denied explanation</string>
     <string name="todays_steps">დღევანდელი შედეგი</string>
-    <string name="mygpi">MyGPI</string>
+    <string name="mygpi">MyFIT</string>
     <string name="zero">0</string>
-    <string name="description">MyGPI Steps ითვლის შენს გავლილ ნაბიჯებს. გაიარე დღეში 10,000 ნაბიჯი და დააგროვე ეკომონეტებით.</string>
     <string name="today_s_steps">დღევანდელი\nნაბიჯები</string>
     <string name="today_at_11_41_am">Today at </string>
     <string name="km">კმ</string>

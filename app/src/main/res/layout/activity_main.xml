@@ -1,166 +1,210 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/colorWhite"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ge.dev.baqari.widget.RoundedView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:center_color="@color/colorBackground"
+        app:end_color="@color/colorBackground_2"
+        app:start_color="@color/colorBackground" />
 
-        <FrameLayout
-            android:id="@+id/defaultBackgroundView"
-            android:layout_width="match_parent"
-            android:layout_height="170dp"
-            android:background="@color/colorDefault"
-            app:layout_constraintTop_toTopOf="parent" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/stepLargeView"
+        android:layout_width="@dimen/step_1_width"
+        android:layout_height="@dimen/step_1_height"
+        android:translationX="-70dp"
+        android:translationY="-20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_step_large" />
 
-        <FrameLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="148dp"
-            android:background="@drawable/ic_wave"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent=".1"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/defaultBackgroundView" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/mygpiTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/bpg_web_001_caps_webfont"
-            android:text="@string/mygpi"
-            android:textAlignment="center"
-            android:textColor="@color/colorWhite"
-            android:textSize="30sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/defaultBackgroundView" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/appCompatTextView4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/bpg_phone_sans"
-            android:text="@string/description"
-            android:textAlignment="center"
-            android:textColor="@color/colorWhite"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@id/frameLayout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.493"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/mygpiTitle"
-            app:layout_constraintVertical_bias="0.29"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="0.8" />
-
-        <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
-            android:id="@+id/circularProgress"
-            android:layout_width="240dp"
-            android:layout_height="240dp"
-            android:layout_marginTop="28dp"
-            android:indeterminate="false"
-            app:direction="clockwise"
-            app:drawDot="false"
-            app:enableProgressAnimation="false"
-            app:fillBackground="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-            app:progress="50"
-            app:progressBackgroundColor="#D1D1D1"
-            app:progressBackgroundStrokeWidth="10dp"
-            app:progressCap="round"
-            app:progressColor="@color/colorPink"
-            app:progressStrokeWidth="10dp"
-            app:startAngle="270"
-            app:textColor="@android:color/transparent" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/appCompatTextView5"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="0.6"
-            android:textAlignment="center"
-            android:text="@string/today_s_steps"
-            android:textColor="@color/colorBlack"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/showSteps"
-            app:layout_constraintEnd_toEndOf="@+id/circularProgress"
-            app:layout_constraintHorizontal_bias="0.504"
-            app:layout_constraintStart_toStartOf="@+id/circularProgress"
-            app:layout_constraintTop_toTopOf="@+id/circularProgress"
-            app:layout_constraintVertical_bias="0.707" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/showSteps"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/bpg_web_001_caps_webfont"
-            android:text="@string/zero"
-            android:textColor="@color/colorGrayDark"
-            android:textSize="50sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/circularProgress"
-            app:layout_constraintEnd_toEndOf="@+id/circularProgress"
-            app:layout_constraintStart_toStartOf="@+id/circularProgress"
-            app:layout_constraintTop_toTopOf="@id/circularProgress"
-            app:layout_constraintVertical_bias="0.602" />
-
-        <!--<androidx.appcompat.widget.AppCompatTextView-->
-        <!--android:id="@+id/wasASleep"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginStart="8dp"-->
-        <!--android:layout_marginTop="20dp"-->
-        <!--android:layout_marginEnd="8dp"-->
-        <!--android:text="@string/today_at_11_41_am"-->
-        <!--android:textSize="16sp"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toBottomOf="@+id/circularProgress" />-->
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/stepLargeView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_step_medium" />
 
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/appCompatTextView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/km"
-            android:textColor="@color/colorGrayDark"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/circularProgress" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:translationX="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/appCompatTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_step_small" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/wentKilometersCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:fontFamily="@font/bpg_web_001_caps_webfont"
-            android:textColor="@color/colorGrayDark"
-            android:textSize="35sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appCompatTextView7" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/appCompatTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="@dimen/app_name_top_margin"
+        android:layout_marginRight="45dp"
+        android:fontFamily="@font/bpg_web_001_caps_webfont"
+        android:text="@string/mygpi"
+        android:textColor="#3054b2"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView2"
+        android:layout_width="@dimen/center_rounder_shadow_view_width"
+        android:layout_height="@dimen/center_rounder_shadow_view_height"
+        android:layout_marginStart="@dimen/center_rounder_shadow_view_margin_start"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/center_rounder_shadow_view_margin_start"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView2"
+        app:layout_constraintVertical_bias="0.056"
+        app:srcCompat="@drawable/rectangle" />
+
+    <ge.dev.baqari.widget.RoundedView
+        android:id="@+id/roundedView"
+        android:layout_width="@dimen/center_rounder_view_width"
+        android:layout_height="@dimen/center_rounder_view_height"
+        android:layout_marginStart="@dimen/rounded_view_margin"
+        android:layout_marginLeft="@dimen/rounded_view_margin"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/rounded_view_margin"
+        android:layout_marginRight="@dimen/rounded_view_margin"
+        android:layout_marginBottom="8dp"
+        app:fillColor="@color/colorPurple"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView2"
+        app:layout_constraintVertical_bias="0.25"
+        app:radius="20dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/appCompatTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="42dp"
+        android:fontFamily="@font/bpg_web_001_caps_webfont"
+        android:lineSpacingExtra="48sp"
+        android:text="@string/todays_steps"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/roundedView"
+        app:layout_constraintStart_toStartOf="@+id/roundedView"
+        app:layout_constraintTop_toTopOf="@+id/roundedView" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/ProgressBarStyle"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="@+id/roundedView"
+        app:layout_constraintStart_toStartOf="@+id/roundedView"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
+
+    <ge.dev.baqari.widget.RoundedView
+        android:id="@+id/roundedView2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:fillColor="#c92066"
+        app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+        app:layout_constraintEnd_toEndOf="@+id/progressBar"
+        app:layout_constraintStart_toStartOf="@+id/progressBar"
+        app:layout_constraintTop_toTopOf="@+id/progressBar"
+        app:radius="500dp" />
+
+    <FrameLayout
+        android:id="@+id/view"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:background="@drawable/drawable_splitted_view"
+        app:layout_constraintBottom_toBottomOf="@+id/roundedView2"
+        app:layout_constraintEnd_toEndOf="@+id/roundedView2"
+        app:layout_constraintStart_toStartOf="@+id/roundedView2"
+        app:layout_constraintTop_toTopOf="@+id/roundedView2">
+
+        <LinearLayout
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center"
+            android:background="@drawable/drawable_lined_view"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                app:srcCompat="@drawable/ic_step_small_white" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/showSteps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="11dp"
+                android:fontFamily="@font/montserrat_semibold"
+                android:lineSpacingExtra="40sp"
+                android:text="@string/zero"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/desctiption_text_size" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/roundedView"
+        app:layout_constraintTop_toBottomOf="@+id/roundedView2"
+        app:layout_constraintVertical_bias="0.336"
+        app:srcCompat="@drawable/ic_person_3" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/appCompatImageView4"
+        app:layout_constraintHorizontal_bias="0.457"
+        app:layout_constraintStart_toEndOf="@+id/appCompatImageView3"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar"
+        app:srcCompat="@drawable/ic_person_2" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/roundedView"
+        app:layout_constraintTop_toBottomOf="@+id/roundedView2"
+        app:layout_constraintVertical_bias="0.401"
+        app:srcCompat="@drawable/ic_person_1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
