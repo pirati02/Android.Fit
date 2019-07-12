@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <ge.dev.baqari.fit.widget.RoundedView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:center_color="@color/colorBackground"
+        app:end_color="@color/colorBackground_2"
+        app:start_color="@color/colorBackground" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/stepLargeView"
+        android:layout_width="@dimen/step_1_width"
+        android:layout_height="@dimen/step_1_height"
+        android:translationX="-70dp"
+        android:translationY="-20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_step_large" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/stepLargeView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_step_medium" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:translationX="25dp"
+        app:layout_constraintBottom_toTopOf="@+id/appCompatTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_step_small" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/appCompatTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="@dimen/app_name_top_margin"
+        android:layout_marginRight="45dp"
+        android:fontFamily="@font/bpg_web_001_caps_webfont"
+        android:text="@string/mygpi"
+        android:textColor="#3054b2"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView2"
+        android:layout_width="@dimen/center_rounder_shadow_view_width"
+        android:layout_height="@dimen/center_rounder_shadow_view_height"
+        android:layout_marginStart="@dimen/center_rounder_shadow_view_margin_start"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/center_rounder_shadow_view_margin_start"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView2"
+        app:layout_constraintVertical_bias="0.056"
+        app:srcCompat="@drawable/rectangle" />
+
+    <ge.dev.baqari.fit.widget.RoundedView
+        android:id="@+id/roundedView"
+        android:layout_width="@dimen/center_rounder_view_width"
+        android:layout_height="@dimen/center_rounder_view_height"
+        android:layout_marginStart="@dimen/rounded_view_margin"
+        android:layout_marginLeft="@dimen/rounded_view_margin"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/rounded_view_margin"
+        android:layout_marginRight="@dimen/rounded_view_margin"
+        android:layout_marginBottom="8dp"
+        app:fillColor="@color/colorPurple"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView2"
+        app:layout_constraintVertical_bias="0.25"
+        app:radius="20dp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/appCompatTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="42dp"
+        android:fontFamily="@font/bpg_web_001_caps_webfont"
+        android:lineSpacingExtra="48sp"
+        android:text="@string/todays_steps"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/roundedView"
+        app:layout_constraintStart_toStartOf="@+id/roundedView"
+        app:layout_constraintTop_toTopOf="@+id/roundedView" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/ProgressBarStyle"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="50dp"
+        android:max="100"
+        app:layout_constraintEnd_toEndOf="@+id/roundedView"
+        app:layout_constraintStart_toStartOf="@+id/roundedView"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
+
+    <ge.dev.baqari.fit.widget.RoundedView
+        android:id="@+id/roundedView2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:fillColor="#c92066"
+        app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+        app:layout_constraintEnd_toEndOf="@+id/progressBar"
+        app:layout_constraintStart_toStartOf="@+id/progressBar"
+        app:layout_constraintTop_toTopOf="@+id/progressBar"
+        app:radius="500dp" />
+
+    <FrameLayout
+        android:id="@+id/view"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:background="@drawable/drawable_splitted_view"
+        app:layout_constraintBottom_toBottomOf="@+id/roundedView2"
+        app:layout_constraintEnd_toEndOf="@+id/roundedView2"
+        app:layout_constraintStart_toStartOf="@+id/roundedView2"
+        app:layout_constraintTop_toTopOf="@+id/roundedView2">
+
+        <LinearLayout
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center"
+            android:background="@drawable/drawable_lined_view"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                app:srcCompat="@drawable/ic_step_small_white" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/showSteps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="11dp"
+                android:fontFamily="@font/montserrat_semibold"
+                android:lineSpacingExtra="40sp"
+                android:text="@string/zero"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/desctiption_text_size" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/roundedView"
+        app:layout_constraintTop_toBottomOf="@+id/roundedView2"
+        app:layout_constraintVertical_bias="0.336"
+        app:srcCompat="@drawable/ic_person_3" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/appCompatImageView4"
+        app:layout_constraintHorizontal_bias="0.457"
+        app:layout_constraintStart_toEndOf="@+id/appCompatImageView3"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar"
+        app:srcCompat="@drawable/ic_person_2" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/roundedView"
+        app:layout_constraintTop_toBottomOf="@+id/roundedView2"
+        app:layout_constraintVertical_bias="0.401"
+        app:srcCompat="@drawable/ic_person_1" />
+
+    <FrameLayout
+        android:id="@+id/expandMoreLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appCompatImageView5">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            app:srcCompat="@drawable/ic_expand_more_40" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5.5dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_expand_more_50" />
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
