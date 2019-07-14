@@ -1,10 +1,13 @@
-package ge.dev.baqari.fit.api.step
+package ge.dev.baqari.fit.api
 
 import android.content.Context
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.util.Log
+import android.widget.Toast
+import ge.dev.baqari.fit.ApplicationImpl
 import ge.dev.baqari.fit.dayOnly
 import ge.dev.baqari.fit.today
 import io.realm.Realm
@@ -12,7 +15,7 @@ import io.realm.Realm
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 
-class StepThread(private val context: Context) : Thread(), SensorEventListener, StepListener {
+class StepThread(private val context: Context, var reinitializeSensor: Boolean = false) : Thread(), SensorEventListener, StepListener {
 
     var onStep: ((step: Long) -> Unit)? = null
     private var sensorManager: SensorManager? = null
@@ -27,9 +30,11 @@ class StepThread(private val context: Context) : Thread(), SensorEventListener, 
     }
 
     override fun run() {
-        if (!isRegister) {
+        if (!isRegister || reinitializeSensor) {
+            Log.d("StepThread", "accel : $accel")
             sensorManager?.registerListener(this, accel, SensorManager.SENSOR_DELAY_NORMAL)
             isRegister = true
+            reinitializeSensor = false
         }
     }
 
@@ -43,7 +48,7 @@ class StepThread(private val context: Context) : Thread(), SensorEventListener, 
     private fun initStepDetector() {
         stepDetector = StepDetector(this)
         sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        accel = sensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        accel = sensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER, true)
         today = Date().today()?.dayOnly()
         SessionManager.startSession(0, false)
         numSteps = BaseCalculator.currentSteps(Realm.getDefaultInstance()).toLong()
@@ -57,11 +62,9 @@ class StepThread(private val context: Context) : Thread(), SensorEventListener, 
     }
 
     override fun onAccuracyChanged(sensor: Sensor, i: Int) {
-
     }
 
     override fun step(num: Long) {
-
         if (!SessionManager.sessionExpired()) {
             SessionManager.update(num)
         } else

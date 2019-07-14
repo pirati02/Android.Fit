@@ -1,11 +1,7 @@
 package ge.dev.baqari.fit.component
 
 import android.annotation.SuppressLint
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
-import android.app.Service
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -16,12 +12,11 @@ import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.TaskStackBuilder
-import androidx.core.content.ContextCompat
 import ge.dev.baqari.fit.R
-
-import ge.dev.baqari.fit.api.step.BaseCalculator
-import ge.dev.baqari.fit.api.step.StepThread
+import ge.dev.baqari.fit.api.BaseCalculator
+import ge.dev.baqari.fit.api.StepThread
 import ge.dev.baqari.fit.round
+
 
 @SuppressLint("Registered")
 class StepService : Service() {
@@ -29,6 +24,8 @@ class StepService : Service() {
     private var mWakeLock: PowerManager.WakeLock? = null
     private var startedForeground: Boolean = false
     private var kilometersCount = 0.0
+    private var notificationId = 1024
+    private var notificationBuilder: NotificationCompat.Builder? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -37,23 +34,29 @@ class StepService : Service() {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        if (thread?.state == Thread.State.NEW)
+        if (thread?.state == Thread.State.NEW || thread?.state == Thread.State.TERMINATED) {
+            if (thread?.state == Thread.State.TERMINATED) {
+                thread?.reinitializeSensor = true
+                startedForeground = false
+            }
             thread?.start()
+        }
 
         if (!startedForeground) {
             mWakeLock(this)
-            startedForeground = true
             thread?.onStep = {
-                startForeground(it)
+                startPushForeground(it)
+                mWakeLock(this)
             }
             thread?.invokeOnStep()
+            startedForeground = true
         }
 
         return START_STICKY
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    fun startForeground(stepCount: Long) {
+    fun startPushForeground(stepCount: Long) {
         var channelId = ""
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -66,32 +69,33 @@ class StepService : Service() {
             notificationManager.createNotificationChannel(stepCounterChannel)
         }
 
-        val notificationLayout = RemoteViews(packageName, R.layout.notification_layout)
-        val notificationLayoutExpanded = RemoteViews(packageName, R.layout.notification_layout)
+        val notificationLayout = RemoteViews(packageName, ge.dev.baqari.fit.R.layout.notification_layout)
+        val notificationLayoutExpanded = RemoteViews(packageName, ge.dev.baqari.fit.R.layout.notification_layout)
 
         kilometersCount = BaseCalculator.calculateKilometers(stepCount)
-        notificationLayout.setTextViewText(R.id.notificationStepCount, "${getString(R.string.steps_)} $stepCount")
-        notificationLayout.setTextViewText(R.id.notificationKmCount, "${getString(R.string.km_s)} ${kilometersCount.round(2)}")
+        notificationLayout.setTextViewText(ge.dev.baqari.fit.R.id.notificationStepCount, "${getString(ge.dev.baqari.fit.R.string.steps_)} $stepCount")
+        notificationLayout.setTextViewText(ge.dev.baqari.fit.R.id.notificationKmCount, "${getString(ge.dev.baqari.fit.R.string.km_s)} ${kilometersCount.round(2)}")
 
-        notificationLayoutExpanded.setTextViewText(R.id.notificationStepCount, "${getString(R.string.steps_)} $stepCount")
-        notificationLayoutExpanded.setTextViewText(R.id.notificationKmCount, "${getString(R.string.km_s)} ${kilometersCount.round(2)}")
+        notificationLayoutExpanded.setTextViewText(ge.dev.baqari.fit.R.id.notificationStepCount, "${getString(ge.dev.baqari.fit.R.string.steps_)} $stepCount")
+        notificationLayoutExpanded.setTextViewText(ge.dev.baqari.fit.R.id.notificationKmCount, "${getString(R.string.km_s)} ${kilometersCount.round(2)}")
 
-        val mBuilder = NotificationCompat.Builder(this, channelId)
+        notificationBuilder = NotificationCompat.Builder(this, channelId)
                 .setStyle(NotificationCompat.DecoratedCustomViewStyle())
                 .setCustomContentView(notificationLayout)
                 .setCustomBigContentView(notificationLayoutExpanded)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setColorized(true)
-                .setColor(ContextCompat.getColor(this, R.color.colorPurple))
+                .extend(NotificationCompat.WearableExtender().apply {
+
+                })
 
         val notificationIntent = Intent(this, MainActivity::class.java)
         val stackBuilder = TaskStackBuilder.create(this)
         stackBuilder.addParentStack(MainActivity::class.java)
         stackBuilder.addNextIntent(notificationIntent)
         val resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
-        mBuilder.setContentIntent(resultPendingIntent)
+        notificationBuilder?.setContentIntent(resultPendingIntent)
 
-        startForeground(1024, mBuilder.build())
+        startForeground(notificationId, notificationBuilder?.build())
     }
 
     override fun onTaskRemoved(rootIntent: Intent) {
@@ -109,6 +113,7 @@ class StepService : Service() {
     }
 
     override fun onDestroy() {
+        super.onDestroy()
         if (mWakeLock != null) {
             if (mWakeLock?.isHeld == true)
                 mWakeLock?.release()
@@ -119,7 +124,6 @@ class StepService : Service() {
         thread?.threadStop()
         val intent = Intent(this, BootBroadcastReceiver::class.java).apply { action = START }
         sendBroadcast(intent)
-        super.onDestroy()
     }
 
 
@@ -136,7 +140,7 @@ class StepService : Service() {
         }
 
         val mgr = context.getSystemService(Context.POWER_SERVICE) as PowerManager
-        mWakeLock = mgr.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, StepService::class.java.name)
+        mWakeLock = mgr.newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK or PowerManager.FULL_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP, StepService::class.java.name)
         mWakeLock?.setReferenceCounted(true)
         mWakeLock?.acquire(1000L)
     }
@@ -144,7 +148,5 @@ class StepService : Service() {
     companion object {
         val START = "com.mygpi.mygpimobilefitness.start"
     }
-
-
-
 }
+

@@ -14,11 +14,11 @@
         android:fontFamily="@font/bpg_phone_sans"
         android:textAlignment="center"
         android:textColor="@color/colorBlack"
-        android:textSize="18sp" />
+        android:textSize="15sp" />
 
     <TextView
         android:layout_width="1dp"
-        android:layout_height="40dp"
+        android:layout_height="35dp"
         android:background="@color/colorGrayDark" />
 
     <TextView
@@ -30,5 +30,5 @@
         android:fontFamily="@font/bpg_phone_sans"
         android:textAlignment="center"
         android:textColor="@color/colorBlack"
-        android:textSize="18sp" />
+        android:textSize="15sp" />
 </LinearLayout>

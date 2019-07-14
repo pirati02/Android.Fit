@@ -1,4 +1,4 @@
-package ge.dev.baqari.fit.api.step
+package ge.dev.baqari.fit.api
 
 import ge.dev.baqari.fit.dayOnly
 import ge.dev.baqari.fit.model.StepModel

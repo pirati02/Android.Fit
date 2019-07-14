@@ -1,7 +1,7 @@
-package ge.dev.baqari.fit.api.step
+package ge.dev.baqari.fit.api
 
+import android.util.Log
 import java.math.BigDecimal
-import kotlin.math.abs
 import kotlin.math.sqrt
 
 internal class StepDetector(private val stepListener: StepListener) {
@@ -54,21 +54,12 @@ internal class StepDetector(private val stepListener: StepListener) {
         val b = BigDecimal(sqrt((x * x + y * y + z * z).toDouble()))
         val vel = b.setScale(2, BigDecimal.ROUND_DOWN).toFloat()
 
-        val strictedVel = 7
-        if (abs(x) - abs(oldX) > strictedVel || abs(y) - abs(oldY) > strictedVel || abs(z) - abs(oldZ) > strictedVel)
-            return
-        else {
-            oldX = x
-            oldY = y
-            oldZ = z
-        }
-
         if (lastVel == 0f)
             lastVel = vel
 
-        val MAX_VEL = 20f
-        val MIN_VEL = 10f
-        if (vel < MIN_VEL || vel > MAX_VEL) {
+        val maxVel = 15f
+        val minVel = 9.3f
+        if (vel < minVel || vel > maxVel) {
             initStepDetector()
             return
         }
@@ -89,7 +80,6 @@ internal class StepDetector(private val stepListener: StepListener) {
                 crest = lastVel
             nowStatus = down
         }
-
         if (nowStatus != lastStatus && nowStatus != init && lastStatus != init) {
             if (crest - trough >= velThreshold) {
                 realSteps()

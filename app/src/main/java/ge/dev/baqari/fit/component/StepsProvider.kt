@@ -83,7 +83,7 @@ class StepsProvider : ContentProvider() {
 
     companion object {
         val PROVIDER_NAME = "com.mygpi.mygpimobilefitness.StepsProvider"
-        val URL = "content://$PROVIDER_NAME/students"
+        val URL = "content://$PROVIDER_NAME/steps"
         val CONTENT_AUTHORITY = Uri.parse(URL)
 
         internal val uriCode = 1

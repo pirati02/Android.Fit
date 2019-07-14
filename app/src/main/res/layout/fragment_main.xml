@@ -84,7 +84,7 @@
         android:layout_height="@dimen/center_rounder_view_height"
         android:layout_marginStart="@dimen/rounded_view_margin"
         android:layout_marginLeft="@dimen/rounded_view_margin"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="@dimen/rounded_view_margin"
         android:layout_marginRight="@dimen/rounded_view_margin"
         android:layout_marginBottom="8dp"
@@ -96,6 +96,28 @@
         app:layout_constraintVertical_bias="0.25"
         app:radius="20dp" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/batteryOptimizationImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/roundedView"
+        app:layout_constraintTop_toTopOf="@+id/roundedView"
+        app:layout_goneMarginEnd="5dp"
+        app:srcCompat="@drawable/ic_battery_alert" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/autoStartImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="@+id/roundedView"
+        app:layout_constraintTop_toTopOf="@+id/roundedView"
+        app:layout_goneMarginEnd="5dp"
+        app:srcCompat="@drawable/ic_autostart" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/appCompatTextView"
         android:layout_width="wrap_content"
@@ -106,7 +128,7 @@
         android:lineSpacingExtra="48sp"
         android:text="@string/todays_steps"
         android:textColor="#ffffff"
-        android:textSize="20sp"
+        android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="@+id/roundedView"
         app:layout_constraintStart_toStartOf="@+id/roundedView"
         app:layout_constraintTop_toTopOf="@+id/roundedView" />
@@ -116,8 +138,9 @@
         style="@style/ProgressBarStyle"
         android:layout_width="220dp"
         android:layout_height="220dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:max="100"
+        android:progress="10"
         app:layout_constraintEnd_toEndOf="@+id/roundedView"
         app:layout_constraintStart_toStartOf="@+id/roundedView"
         app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
@@ -175,13 +198,13 @@
         android:id="@+id/appCompatImageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/roundedView"
         app:layout_constraintTop_toBottomOf="@+id/roundedView2"
-        app:layout_constraintVertical_bias="0.336"
+        app:layout_constraintVertical_bias="0.251"
         app:srcCompat="@drawable/ic_person_3" />
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -189,10 +212,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toStartOf="@+id/appCompatImageView4"
-        app:layout_constraintHorizontal_bias="0.457"
         app:layout_constraintStart_toEndOf="@+id/appCompatImageView3"
         app:layout_constraintTop_toBottomOf="@+id/progressBar"
         app:srcCompat="@drawable/ic_person_2" />
@@ -206,7 +228,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/roundedView"
         app:layout_constraintTop_toBottomOf="@+id/roundedView2"
-        app:layout_constraintVertical_bias="0.401"
+        app:layout_constraintVertical_bias="0.273"
         app:srcCompat="@drawable/ic_person_1" />
 
     <FrameLayout
@@ -214,6 +236,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appCompatImageView5">
