@@ -1,5 +1,6 @@
 package ge.dev.baqari.fit.component.fragment
 
+import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Context
 import android.content.Context.BIND_AUTO_CREATE
@@ -52,26 +53,43 @@ class MainFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        expandMoreLayout.setOnClickListener {
-            (activity as MainActivity).openDetails()
+        try {
+            numSteps = BaseCalculator.currentSteps(Realm.getDefaultInstance())
+            expandMoreLayout.setOnClickListener {
+                (activity as MainActivity).openDetails()
+            }
+            startService()
+            (activity as MainActivity?)?.onStep = {
+                numSteps = it?.toDouble()!!
+            }
+            (activity as MainActivity?)?.onNotificationStopped = {
+                notificationOffImage?.visibility = VISIBLE
+            }
+            checkBatteryOptimization()
+            enableAutoStart()
+            checkNotification()
+        } catch (exception: java.lang.Exception) {
+            exception.printStackTrace()
         }
-        startService()
-        (activity as MainActivity?)?.onStep = {
-            numSteps = it?.toDouble()!!
-        }
-
-        numSteps = BaseCalculator.currentSteps(Realm.getDefaultInstance())
-
-        checkBatteryOptimization()
-        enableAutoStart()
     }
 
+    private fun checkNotification() {
+        val notificationEnabled: Boolean? = storage()["notification_enabled", true]
+        notificationOffImage.visibility = if (notificationEnabled == false) VISIBLE else GONE
+        notificationOffImage.setOnClickListener {
+            storage()["notification_enabled"] = true
+            startService()
+            notificationOffImage.visibility = GONE
+        }
+    }
+
+    @SuppressLint("BatteryLife")
     @RequiresApi(Build.VERSION_CODES.M)
     private fun checkBatteryOptimization() {
         try {
             val powerManager = activity?.getSystemService(Context.POWER_SERVICE) as PowerManager
             val isIgnoringBatteryOptimizations = powerManager.isIgnoringBatteryOptimizations(activity?.packageName)
-            batteryOptimizationImage.visibility = if (isIgnoringBatteryOptimizations) VISIBLE else GONE
+            batteryOptimizationImage.visibility = if (!isIgnoringBatteryOptimizations) VISIBLE else GONE
 
             batteryOptimizationImage.setOnClickListener {
                 val intent = Intent()
@@ -114,15 +132,19 @@ class MainFragment : Fragment() {
         if (requestCode == BATTERY_INGORE_REQUEST) {
             val powerManager = activity?.getSystemService(Context.POWER_SERVICE) as PowerManager
             val isIgnoringBatteryOptimizations = powerManager.isIgnoringBatteryOptimizations(activity?.packageName)
-            batteryOptimizationImage.visibility = if (isIgnoringBatteryOptimizations) VISIBLE else GONE
+            batteryOptimizationImage.visibility = if (!isIgnoringBatteryOptimizations) VISIBLE else GONE
         }
     }
 
     private fun startService() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            activity?.startForegroundService(Intent(activity, StepService::class.java))
+            activity?.startForegroundService(Intent(activity, StepService::class.java).apply {
+                action = StepService.START
+            })
         } else {
-            activity?.startService(Intent(activity, StepService::class.java))
+            activity?.startService(Intent(activity, StepService::class.java).apply {
+                action = StepService.START
+            })
         }
     }
 }

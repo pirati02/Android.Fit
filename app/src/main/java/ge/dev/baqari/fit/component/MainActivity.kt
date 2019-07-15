@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     private var bus: EventBus? = null
     var onStep: ((step: Long?) -> Unit)? = null
+    var onNotificationStopped: (() -> Unit)? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +39,11 @@ class MainActivity : AppCompatActivity() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun updateSteps(num: Long?) {
         onStep?.invoke(num)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun disableNotification(notificationDisabled: Boolean?) {
+        onNotificationStopped?.invoke()
     }
 
     fun openDetails() {

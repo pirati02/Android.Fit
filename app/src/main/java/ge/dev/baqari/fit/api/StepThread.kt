@@ -6,8 +6,6 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.util.Log
-import android.widget.Toast
-import ge.dev.baqari.fit.ApplicationImpl
 import ge.dev.baqari.fit.dayOnly
 import ge.dev.baqari.fit.today
 import io.realm.Realm
@@ -15,7 +13,7 @@ import io.realm.Realm
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 
-class StepThread(private val context: Context, var reinitializeSensor: Boolean = false) : Thread(), SensorEventListener, StepListener {
+class StepThread(private val context: Context, var reinitializeSensor: Boolean = false) : SensorEventListener, StepListener {
 
     var onStep: ((step: Long) -> Unit)? = null
     private var sensorManager: SensorManager? = null
@@ -29,7 +27,7 @@ class StepThread(private val context: Context, var reinitializeSensor: Boolean =
         initStepDetector()
     }
 
-    override fun run() {
+    fun run() {
         if (!isRegister || reinitializeSensor) {
             Log.d("StepThread", "accel : $accel")
             sensorManager?.registerListener(this, accel, SensorManager.SENSOR_DELAY_NORMAL)
@@ -48,7 +46,7 @@ class StepThread(private val context: Context, var reinitializeSensor: Boolean =
     private fun initStepDetector() {
         stepDetector = StepDetector(this)
         sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        accel = sensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER, true)
+        accel = sensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         today = Date().today()?.dayOnly()
         SessionManager.startSession(0, false)
         numSteps = BaseCalculator.currentSteps(Realm.getDefaultInstance()).toLong()

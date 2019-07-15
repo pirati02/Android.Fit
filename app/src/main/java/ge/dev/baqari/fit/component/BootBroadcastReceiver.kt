@@ -11,6 +11,7 @@ class BootBroadcastReceiver : BroadcastReceiver() {
             Intent.ACTION_MEDIA_MOUNTED,
             Intent.ACTION_BOOT_COMPLETED -> {
                 val serviceIntent = Intent(context, StepService::class.java)
+                serviceIntent.action = StepService.RESTART_ACTION
                 context.startService(serviceIntent)
             }
         }
