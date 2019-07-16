@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 
 object BaseCalculator {
     fun calculateKilometers(numSteps: Long): Double {
-        return (numSteps / 1100.0)
+        return (numSteps / 1200.0)
     }
 
     fun currentSteps(realm: Realm): Double {

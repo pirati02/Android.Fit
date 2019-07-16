@@ -78,6 +78,8 @@ class StepThread(private val context: Context, var reinitializeSensor: Boolean =
     }
 
     fun invokeOnStep() {
+        if (numSteps == 0L)
+            numSteps = BaseCalculator.currentSteps(Realm.getDefaultInstance()).toLong()
         onStep?.invoke(numSteps)
     }
 }

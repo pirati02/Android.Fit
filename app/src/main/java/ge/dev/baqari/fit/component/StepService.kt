@@ -16,6 +16,7 @@ import androidx.core.app.TaskStackBuilder
 import ge.dev.baqari.fit.*
 import ge.dev.baqari.fit.api.BaseCalculator
 import ge.dev.baqari.fit.api.StepThread
+import io.realm.Realm
 import org.greenrobot.eventbus.EventBus
 
 
@@ -66,7 +67,7 @@ open class StepService : Service() {
                         thread?.invokeOnStep()
 
                         if (notificationEnabled == true) {
-                            startPushForeground(0)
+                            startPushForeground(null)
                             startedForeground = true
                         }
                     }
@@ -80,7 +81,12 @@ open class StepService : Service() {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    fun startPushForeground(stepCount: Long) {
+    fun startPushForeground(stepCount: Long?) {
+        var stepCountValue = stepCount
+        if (stepCountValue == null) {
+            stepCountValue = BaseCalculator.currentSteps(Realm.getDefaultInstance())?.toLong()
+        }
+
         var channelId = ""
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -98,11 +104,11 @@ open class StepService : Service() {
         val notificationLayout = RemoteViews(packageName, R.layout.notification_layout)
         val notificationLayoutExpanded = RemoteViews(packageName, R.layout.notification_layout)
 
-        kilometersCount = BaseCalculator.calculateKilometers(stepCount)
-        notificationLayout.setTextViewText(R.id.notificationStepCount, "${getString(ge.dev.baqari.fit.R.string.steps_)} $stepCount")
+        kilometersCount = BaseCalculator.calculateKilometers(stepCountValue)
+        notificationLayout.setTextViewText(R.id.notificationStepCount, "${getString(ge.dev.baqari.fit.R.string.steps_)} $stepCountValue")
         notificationLayout.setTextViewText(R.id.notificationKmCount, "${getString(ge.dev.baqari.fit.R.string.km_s)} ${kilometersCount.round(2)}")
 
-        notificationLayoutExpanded.setTextViewText(ge.dev.baqari.fit.R.id.notificationStepCount, "${getString(ge.dev.baqari.fit.R.string.steps_)} $stepCount")
+        notificationLayoutExpanded.setTextViewText(ge.dev.baqari.fit.R.id.notificationStepCount, "${getString(ge.dev.baqari.fit.R.string.steps_)} $stepCountValue")
         notificationLayoutExpanded.setTextViewText(ge.dev.baqari.fit.R.id.notificationKmCount, "${getString(R.string.km_s)} ${kilometersCount.round(2)}")
 
         val stopServicePendingIntent = PendingIntent.getService(this, 0, Intent(this, StepService::class.java).apply {
