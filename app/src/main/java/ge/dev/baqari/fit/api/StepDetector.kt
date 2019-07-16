@@ -58,7 +58,7 @@ internal class StepDetector(private val stepListener: StepListener) {
             lastVel = vel
 
         val maxVel = 15f
-        val minVel = 9.3f
+        val minVel = 9.75f
         if (vel < minVel || vel > maxVel) {
             initStepDetector()
             return

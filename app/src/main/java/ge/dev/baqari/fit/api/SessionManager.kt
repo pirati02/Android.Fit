@@ -2,7 +2,7 @@ package ge.dev.baqari.fit.api
 
 import ge.dev.baqari.fit.model.StepTransaction
 import ge.dev.baqari.fit.model.SuccessTransaction
-import ge.dev.baqari.fit.today
+import ge.dev.baqari.fit.utils.today
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -42,7 +42,7 @@ object SessionManager {
 
     fun sessionExpired(): Boolean {
         return if (startTime == null) true
-        else return counter > 20
+        else return counter > 30
     }
 
     fun update(num: Long) {

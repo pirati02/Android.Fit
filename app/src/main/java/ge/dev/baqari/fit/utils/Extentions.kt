@@ -1,4 +1,4 @@
-package ge.dev.baqari.fit
+package ge.dev.baqari.fit.utils
 
 import java.util.Calendar
 import java.util.Date

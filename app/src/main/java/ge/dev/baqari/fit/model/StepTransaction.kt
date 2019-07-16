@@ -1,6 +1,6 @@
 package ge.dev.baqari.fit.model
 
-import ge.dev.baqari.fit.dayOnly
+import ge.dev.baqari.fit.utils.dayOnly
 
 import java.util.Date
 

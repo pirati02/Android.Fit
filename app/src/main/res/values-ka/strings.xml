@@ -12,7 +12,7 @@
     <string name="km">კმ</string>
     <string name="steps_" translatable="false">ნაბიჯები :</string>
     <string name="km_s" translatable="false">კმ :</string>
-    <string name="stop_service">გამორთვა</string>
+    <string name="stop_service">გაქრობა</string>
     <string name="ok">კარგი</string>
     <string name="application_should_count_steps_in_foreground">აპლიკაციას ჭირდება წვდომა რომ იმუშაოს ჩახურულ რეჟიმში და დაითვალოს ნაბიჯები</string>
 </resources>

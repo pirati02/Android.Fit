@@ -1,7 +1,8 @@
-package ge.dev.baqari.fit
+package ge.dev.baqari.fit.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import ge.dev.baqari.fit.ApplicationImpl
 
 fun storage(): SharedPreferences = ApplicationImpl.instance?.getSharedPreferences("myfit_prefs", Context.MODE_PRIVATE)!!
 
@@ -33,4 +34,8 @@ operator fun SharedPreferences.set(key: String, value: Any?) {
         is Long -> edit { it.putLong(key, value) }
         else -> throw UnsupportedOperationException("UnsupportedOperationException")
     }
+}
+
+fun get(): SharedPreferences {
+    return storage()
 }

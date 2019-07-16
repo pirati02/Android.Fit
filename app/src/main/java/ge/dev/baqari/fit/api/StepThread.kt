@@ -6,16 +6,16 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.util.Log
-import ge.dev.baqari.fit.dayOnly
-import ge.dev.baqari.fit.today
+import ge.dev.baqari.fit.utils.dayOnly
+import ge.dev.baqari.fit.utils.today
 import io.realm.Realm
 
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 
-class StepThread(private val context: Context, var reinitializeSensor: Boolean = false) : SensorEventListener, StepListener {
+class StepThread(private val context: Context) : SensorEventListener, StepListener {
 
-    var onStep: ((step: Long) -> Unit)? = null
+    var onStep: OnStepUpdateListener? = null
     private var sensorManager: SensorManager? = null
     private var accel: Sensor? = null
     private var stepDetector: StepDetector? = null
@@ -28,11 +28,10 @@ class StepThread(private val context: Context, var reinitializeSensor: Boolean =
     }
 
     fun run() {
-        if (!isRegister || reinitializeSensor) {
+        if (!isRegister) {
             Log.d("StepThread", "accel : $accel")
             sensorManager?.registerListener(this, accel, SensorManager.SENSOR_DELAY_NORMAL)
             isRegister = true
-            reinitializeSensor = false
         }
     }
 
@@ -63,9 +62,9 @@ class StepThread(private val context: Context, var reinitializeSensor: Boolean =
     }
 
     override fun step(num: Long) {
-        if (!SessionManager.sessionExpired()) {
+        if (!SessionManager.sessionExpired())
             SessionManager.update(num)
-        } else
+        else
             SessionManager.startSession(num, true)
 
         if (today != Date().today()?.dayOnly()) {
@@ -73,13 +72,17 @@ class StepThread(private val context: Context, var reinitializeSensor: Boolean =
             today = Date().today()?.dayOnly()
         }
         numSteps += num
-        onStep?.invoke(numSteps)
+        onStep?.onStep(numSteps)
         EventBus.getDefault().post(numSteps)
     }
 
     fun invokeOnStep() {
         if (numSteps == 0L)
             numSteps = BaseCalculator.currentSteps(Realm.getDefaultInstance()).toLong()
-        onStep?.invoke(numSteps)
+        onStep?.onStep(numSteps)
+    }
+
+    interface OnStepUpdateListener {
+        fun onStep(step: Long)
     }
 }

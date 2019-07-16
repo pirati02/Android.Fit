@@ -13,5 +13,5 @@
     <string name="km_s" translatable="false">KM\'s :</string>
     <string name="application_should_count_steps_in_foreground">Application needs some access for counting steps in foreground</string>
     <string name="ok">Ok</string>
-    <string name="stop_service">stop</string>
+    <string name="stop_service">clear</string>
 </resources>

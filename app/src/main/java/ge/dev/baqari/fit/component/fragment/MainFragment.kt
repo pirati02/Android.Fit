@@ -3,10 +3,7 @@ package ge.dev.baqari.fit.component.fragment
 import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Context
-import android.content.Context.BIND_AUTO_CREATE
-import android.content.Context.BIND_IMPORTANT
 import android.content.Intent
-import android.content.ServiceConnection
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.*
@@ -19,20 +16,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ge.dev.baqari.fit.api.BaseCalculator
 import ge.dev.baqari.fit.component.MainActivity
-import ge.dev.baqari.fit.component.StepService
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_main.*
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
-import androidx.core.content.ContextCompat.startForegroundService
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat.getSystemService
 import ge.dev.baqari.fit.R
-import ge.dev.baqari.fit.get
-import ge.dev.baqari.fit.set
-import ge.dev.baqari.fit.storage
+import ge.dev.baqari.fit.component.StepService
+import ge.dev.baqari.fit.utils.LocalKeys
+import ge.dev.baqari.fit.utils.get
+import ge.dev.baqari.fit.utils.set
+import ge.dev.baqari.fit.utils.storage
 import kotlin.math.roundToInt
 
 
@@ -63,7 +55,7 @@ class MainFragment : Fragment() {
                 numSteps = it?.toDouble()!!
             }
             (activity as MainActivity?)?.onNotificationStopped = {
-                notificationOffImage?.visibility = VISIBLE
+                notificationOffImage.setImageResource(if (it == false) R.drawable.ic_notification_on else R.drawable.ic_notification_off)
             }
             checkBatteryOptimization()
             enableAutoStart()
@@ -74,12 +66,19 @@ class MainFragment : Fragment() {
     }
 
     private fun checkNotification() {
-        val notificationEnabled: Boolean? = storage()["notification_enabled", true]
-        notificationOffImage.visibility = if (notificationEnabled == false) VISIBLE else GONE
+        val notificationEnabled: Boolean? = storage()[LocalKeys.notificationEnabledKey, true]
+        notificationOffImage.setImageResource(if (notificationEnabled == false || notificationEnabled == null) R.drawable.ic_notification_on else R.drawable.ic_notification_off)
         notificationOffImage.setOnClickListener {
-            storage()["notification_enabled"] = true
-            startService()
-            notificationOffImage.visibility = GONE
+            val enabled: Boolean? = storage()[LocalKeys.notificationEnabledKey, true]
+            if (!enabled!!) {
+                startService()
+                notificationOffImage.setImageResource(R.drawable.ic_notification_off)
+                storage()[LocalKeys.notificationEnabledKey] = true
+            } else {
+                stopService()
+                notificationOffImage.setImageResource(R.drawable.ic_notification_on)
+                storage()[LocalKeys.notificationEnabledKey] = false
+            }
         }
     }
 
@@ -137,14 +136,14 @@ class MainFragment : Fragment() {
     }
 
     private fun startService() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            activity?.startForegroundService(Intent(activity, StepService::class.java).apply {
-                action = StepService.START
-            })
-        } else {
-            activity?.startService(Intent(activity, StepService::class.java).apply {
-                action = StepService.START
-            })
-        }
+        activity?.startService(Intent(activity, StepService::class.java).apply {
+            action = StepService.START
+        })
+    }
+
+    private fun stopService() {
+        activity?.startService(Intent(activity, StepService::class.java).apply {
+            action = StepService.STOP_REMOTELY
+        })
     }
 }
