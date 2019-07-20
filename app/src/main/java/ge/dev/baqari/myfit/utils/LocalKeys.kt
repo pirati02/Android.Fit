@@ -1,4 +1,4 @@
-package ge.dev.baqari.fit.utils
+package ge.dev.baqari.myfit.utils
 
 object LocalKeys {
     val notificationEnabledKey = "notification_enabled"

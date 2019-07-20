@@ -1,11 +1,11 @@
-package ge.dev.baqari.fit.component.fragment
+package ge.dev.baqari.myfit.component.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import ge.dev.baqari.fit.R
+import ge.dev.baqari.myfit.R
 
 class DetailedFragment : Fragment() {
 

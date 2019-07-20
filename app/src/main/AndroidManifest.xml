@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="ge.dev.baqari.fit">
+    package="ge.dev.baqari.myfit">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -9,11 +9,14 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.SET_ALARM"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+
     <permission
-        android:name="com.dev.baqari.READ_DATABASE"
+        android:name="ge.dev.baqari.myfit.READ_DATABASE"
         android:protectionLevel="normal" />
     <permission
-        android:name="com.dev.baqari.WRITE_DATABASE"
+        android:name="ge.dev.baqari.myfit.WRITE_DATABASE"
         android:protectionLevel="normal" />
 
     <application
@@ -47,8 +50,8 @@
             android:name=".component.StepsProvider"
             android:authorities="com.dev.baqari.StepsProvider"
             android:exported="true"
-            android:readPermission="com.mygpi.mygpimobilefitness.READ_DATABASE"
-            android:writePermission="com.mygpi.mygpimobilefitness.WRITE_DATABASE" />
+            android:readPermission="ge.dev.baqari.myfit.READ_DATABASE"
+            android:writePermission="ge.dev.baqari.myfit.WRITE_DATABASE" />
 
         <receiver
             android:name=".component.BootBroadcastReceiver"
@@ -59,7 +62,7 @@
                 <action android:name="android.intent.action.MEDIA_MOUNTED" />
                 <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
                 <action android:name="android.intent.action.MEDIA_EJECT" />
-                <action android:name="com.mygpi.mygpimobilefitness.start" />
+                <action android:name="ge.dev.baqari.myfit.START" />
             </intent-filter>
         </receiver>
 

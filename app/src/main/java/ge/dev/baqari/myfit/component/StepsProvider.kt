@@ -1,4 +1,4 @@
-package ge.dev.baqari.fit.component
+package ge.dev.baqari.myfit.component
 
 import android.annotation.SuppressLint
 import android.content.ContentProvider
@@ -7,9 +7,9 @@ import android.content.UriMatcher
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.net.Uri
-import ge.dev.baqari.fit.component.StepsProvider.StepColumns.ALL_STEPS
+import ge.dev.baqari.myfit.component.StepsProvider.StepColumns.ALL_STEPS
 
-import ge.dev.baqari.fit.model.StepModel
+import ge.dev.baqari.myfit.model.StepModel
 
 import io.realm.Realm
 import io.realm.RealmResults
@@ -82,7 +82,7 @@ class StepsProvider : ContentProvider() {
     }
 
     companion object {
-        val PROVIDER_NAME = "com.mygpi.mygpimobilefitness.StepsProvider"
+        val PROVIDER_NAME = "com.dev.baqari.fit.StepsProvider"
         val URL = "content://$PROVIDER_NAME/steps"
         val CONTENT_AUTHORITY = Uri.parse(URL)
 

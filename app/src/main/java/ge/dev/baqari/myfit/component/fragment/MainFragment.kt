@@ -1,4 +1,4 @@
-package ge.dev.baqari.fit.component.fragment
+package ge.dev.baqari.myfit.component.fragment
 
 import android.annotation.SuppressLint
 import android.content.ComponentName
@@ -14,17 +14,17 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import ge.dev.baqari.fit.api.BaseCalculator
-import ge.dev.baqari.fit.component.MainActivity
+import ge.dev.baqari.myfit.api.BaseCalculator
+import ge.dev.baqari.myfit.component.MainActivity
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_main.*
 import androidx.annotation.RequiresApi
-import ge.dev.baqari.fit.R
-import ge.dev.baqari.fit.component.StepService
-import ge.dev.baqari.fit.utils.LocalKeys
-import ge.dev.baqari.fit.utils.get
-import ge.dev.baqari.fit.utils.set
-import ge.dev.baqari.fit.utils.storage
+import ge.dev.baqari.myfit.R
+import ge.dev.baqari.myfit.component.StepService
+import ge.dev.baqari.myfit.utils.LocalKeys
+import ge.dev.baqari.myfit.utils.get
+import ge.dev.baqari.myfit.utils.set
+import ge.dev.baqari.myfit.utils.storage
 import kotlin.math.roundToInt
 
 
@@ -86,6 +86,9 @@ class MainFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.M)
     private fun checkBatteryOptimization() {
         try {
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1)
+                return
+
             val powerManager = activity?.getSystemService(Context.POWER_SERVICE) as PowerManager
             val isIgnoringBatteryOptimizations = powerManager.isIgnoringBatteryOptimizations(activity?.packageName)
             batteryOptimizationImage.visibility = if (!isIgnoringBatteryOptimizations) VISIBLE else GONE
@@ -129,6 +132,8 @@ class MainFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == BATTERY_INGORE_REQUEST) {
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP_MR1)
+                return
             val powerManager = activity?.getSystemService(Context.POWER_SERVICE) as PowerManager
             val isIgnoringBatteryOptimizations = powerManager.isIgnoringBatteryOptimizations(activity?.packageName)
             batteryOptimizationImage.visibility = if (!isIgnoringBatteryOptimizations) VISIBLE else GONE

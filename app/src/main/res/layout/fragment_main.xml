@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
-    <ge.dev.baqari.fit.widget.RoundedView
+    <ge.dev.baqari.myfit.widget.RoundedView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:center_color="@color/colorBackground"
@@ -33,7 +33,6 @@
         app:layout_constraintStart_toEndOf="@+id/stepLargeView"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_step_medium" />
-
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="wrap_content"
@@ -78,7 +77,7 @@
         app:layout_constraintVertical_bias="0.056"
         app:srcCompat="@drawable/rectangle" />
 
-    <ge.dev.baqari.fit.widget.RoundedView
+    <ge.dev.baqari.myfit.widget.RoundedView
         android:id="@+id/roundedView"
         android:layout_width="@dimen/center_rounder_view_width"
         android:layout_height="@dimen/center_rounder_view_height"
@@ -162,7 +161,7 @@
         app:layout_constraintStart_toStartOf="@+id/roundedView"
         app:layout_constraintTop_toBottomOf="@+id/appCompatTextView" />
 
-    <ge.dev.baqari.fit.widget.RoundedView
+    <ge.dev.baqari.myfit.widget.RoundedView
         android:id="@+id/roundedView2"
         android:layout_width="200dp"
         android:layout_height="200dp"

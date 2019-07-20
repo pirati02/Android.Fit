@@ -1,6 +1,6 @@
-package ge.dev.baqari.fit.api
+package ge.dev.baqari.myfit.api
 
-import android.util.Log
+import ge.dev.baqari.myfit.utils.Device
 import java.math.BigDecimal
 import kotlin.math.sqrt
 
@@ -58,7 +58,8 @@ internal class StepDetector(private val stepListener: StepListener) {
             lastVel = vel
 
         val maxVel = 15f
-        val minVel = 9.75f
+        val minVel = if(Device.isXiaomi()) 8.5f else 7.5f
+
         if (vel < minVel || vel > maxVel) {
             initStepDetector()
             return

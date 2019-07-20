@@ -1,4 +1,4 @@
-package ge.dev.baqari.fit.component
+package ge.dev.baqari.myfit.component
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

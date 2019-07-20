@@ -1,8 +1,8 @@
-package ge.dev.baqari.fit.utils
+package ge.dev.baqari.myfit.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import ge.dev.baqari.fit.ApplicationImpl
+import ge.dev.baqari.myfit.ApplicationImpl
 
 fun storage(): SharedPreferences = ApplicationImpl.instance?.getSharedPreferences("myfit_prefs", Context.MODE_PRIVATE)!!
 

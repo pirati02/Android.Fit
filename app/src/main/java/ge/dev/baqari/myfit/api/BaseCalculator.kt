@@ -1,15 +1,15 @@
-package ge.dev.baqari.fit.api
+package ge.dev.baqari.myfit.api
 
-import ge.dev.baqari.fit.utils.dayOnly
-import ge.dev.baqari.fit.model.StepModel
-import ge.dev.baqari.fit.utils.today
+import ge.dev.baqari.myfit.utils.dayOnly
+import ge.dev.baqari.myfit.model.StepModel
+import ge.dev.baqari.myfit.utils.today
 import io.realm.Realm
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 object BaseCalculator {
     fun calculateKilometers(numSteps: Long): Double {
-        return (numSteps / 1200.0)
+        return (numSteps / 1300.0)
     }
 
     fun currentSteps(realm: Realm): Double {

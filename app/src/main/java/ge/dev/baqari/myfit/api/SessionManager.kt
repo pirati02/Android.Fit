@@ -1,52 +1,38 @@
-package ge.dev.baqari.fit.api
+package ge.dev.baqari.myfit.api
 
-import ge.dev.baqari.fit.model.StepTransaction
-import ge.dev.baqari.fit.model.SuccessTransaction
-import ge.dev.baqari.fit.utils.today
-import io.reactivex.Observable
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+import ge.dev.baqari.myfit.model.StepTransaction
+import ge.dev.baqari.myfit.model.SuccessTransaction
+import ge.dev.baqari.myfit.utils.today
 import io.realm.Realm
 import io.realm.RealmAsyncTask
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 
 object SessionManager {
     private var startTime: Date? = null
     private var realmAsyncTask: RealmAsyncTask? = null
-    private var counter: Long = 0
-    private var interval: Disposable? = null
+    private var counterInMillis: Long = 0
 
     fun startSession(num: Long, restarted: Boolean = false) {
         if (restarted) {
-            counter = 0
+            counterInMillis = 0
             save(startTime, Date().today(), num, false)
             startTime = null
-            if (interval != null && interval?.isDisposed == false) {
-                interval?.dispose()
-                interval = null
-            }
         }
 
         if (startTime == null) {
             startTime = Date().today()
-            interval = Observable.interval(1000, TimeUnit.MILLISECONDS)
-                    .observeOn(Schedulers.io())
-                    .subscribeOn(Schedulers.io())
-                    .subscribe {
-                        counter += 1
-                    }
+            counterInMillis = System.currentTimeMillis()
         }
     }
 
     fun sessionExpired(): Boolean {
         return if (startTime == null) true
-        else return counter > 30
+        else return (System.currentTimeMillis() - counterInMillis) > 10000
     }
 
     fun update(num: Long) {
-        counter = 0
+        counterInMillis = 0
         save(startTime!!, Date().today(), num)
     }
 

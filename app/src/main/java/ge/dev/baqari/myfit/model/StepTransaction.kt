@@ -1,6 +1,6 @@
-package ge.dev.baqari.fit.model
+package ge.dev.baqari.myfit.model
 
-import ge.dev.baqari.fit.utils.dayOnly
+import ge.dev.baqari.myfit.utils.dayOnly
 
 import java.util.Date
 
@@ -12,10 +12,15 @@ class StepTransaction(private val startDate: Date?,
                       private val update: Boolean = false) : Realm.Transaction {
 
     override fun execute(realm: Realm?) {
-        val stepModel: StepModel? = if (!update)
-            realm?.createObject(StepModel::class.java)
-        else
-            realm?.where(StepModel::class.java)?.equalTo("startDate", startDate?.dayOnly())?.findAll()?.lastOrNull()
+        var stepModel: StepModel?
+
+        if (!update)
+            stepModel = realm?.createObject(StepModel::class.java)
+        else {
+            stepModel = realm?.where(StepModel::class.java)?.equalTo("startDate", startDate?.dayOnly())?.findAll()?.lastOrNull()
+            if (stepModel == null)
+                stepModel = realm?.createObject(StepModel::class.java)
+        }
 
         if (update)
             stepModel?.let {

@@ -1,4 +1,4 @@
-package ge.dev.baqari.fit.api
+package ge.dev.baqari.myfit.api
 
 import android.content.Context
 import android.hardware.Sensor
@@ -6,8 +6,8 @@ import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.util.Log
-import ge.dev.baqari.fit.utils.dayOnly
-import ge.dev.baqari.fit.utils.today
+import ge.dev.baqari.myfit.utils.dayOnly
+import ge.dev.baqari.myfit.utils.today
 import io.realm.Realm
 
 import org.greenrobot.eventbus.EventBus
@@ -62,15 +62,16 @@ class StepThread(private val context: Context) : SensorEventListener, StepListen
     }
 
     override fun step(num: Long) {
+        if (today != Date().today()?.dayOnly()) {
+            numSteps = 0
+            today = Date().today()?.dayOnly()
+            SessionManager.startSession(num, false)
+        }
+
         if (!SessionManager.sessionExpired())
             SessionManager.update(num)
         else
             SessionManager.startSession(num, true)
-
-        if (today != Date().today()?.dayOnly()) {
-            numSteps = 0
-            today = Date().today()?.dayOnly()
-        }
         numSteps += num
         onStep?.onStep(numSteps)
         EventBus.getDefault().post(numSteps)

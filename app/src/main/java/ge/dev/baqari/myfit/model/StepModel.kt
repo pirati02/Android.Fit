@@ -1,4 +1,4 @@
-package ge.dev.baqari.fit.model
+package ge.dev.baqari.myfit.model
 
 import java.util.Date
 
