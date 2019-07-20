@@ -63,10 +63,10 @@ class StepThread(private val context: Context) : SensorEventListener, StepListen
 
     override fun step(num: Long) {
         if (today != Date().today()?.dayOnly()) {
+            SessionManager.endSession(num)
             numSteps = 0
-            today = Date().today()?.dayOnly()
-            SessionManager.startSession(num, false)
         }
+        today = Date().today()?.dayOnly()
 
         if (!SessionManager.sessionExpired())
             SessionManager.update(num)

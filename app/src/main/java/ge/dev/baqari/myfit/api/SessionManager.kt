@@ -26,6 +26,12 @@ object SessionManager {
         }
     }
 
+    fun endSession(num: Long) {
+        save(startTime ?: Date().today(), Date().today(), num, false)
+        startTime = Date().today()
+        counterInMillis = System.currentTimeMillis()
+    }
+
     fun sessionExpired(): Boolean {
         return if (startTime == null) true
         else return (System.currentTimeMillis() - counterInMillis) > 10000

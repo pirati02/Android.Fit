@@ -7,10 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.eftimoff.viewpagertransformers.StackTransformer
 import ge.dev.baqari.myfit.R
 import ge.dev.baqari.myfit.component.fragment.MainFragment
+import ge.dev.baqari.myfit.utils.dayOnly
 import kotlinx.android.synthetic.main.activity_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
