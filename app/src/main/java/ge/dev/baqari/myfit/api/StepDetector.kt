@@ -1,14 +1,13 @@
 package ge.dev.baqari.myfit.api
 
+import android.util.Log
 import ge.dev.baqari.myfit.utils.Device
 import java.math.BigDecimal
 import kotlin.math.sqrt
 
 internal class StepDetector(private val stepListener: StepListener) {
     private val initVel = 1.1f
-    private val fourVels = floatArrayOf(initVel, initVel, initVel, initVel,
-            initVel, initVel, initVel, initVel, initVel,
-            initVel, initVel, initVel, initVel, initVel, initVel)
+    private val fourVels = floatArrayOf(initVel, initVel, initVel, initVel)
     private var pos = 0
     private var lastStepTime: Long = 0
     private var lastVel = 0f
@@ -25,10 +24,8 @@ internal class StepDetector(private val stepListener: StepListener) {
     private val init = 2
     private var nowStatus = init
     private var lastStatus = init
+    private var lastX = 0f
 
-    private var oldX = 0f
-    private var oldY = 0f
-    private var oldZ = 0f
 
     init {
         model = WAIT_MODEL
@@ -50,6 +47,14 @@ internal class StepDetector(private val stepListener: StepListener) {
             return
         lastStepTime = curTime
 
+        if (lastX == 0f)
+            lastX = x
+
+        if (lastX < 0 && x > 0 || lastX > 0 && x < 0)
+            return
+
+        Log.d("stepdetector", "x : $x, y : $y, z :  $z")
+
 
         val b = BigDecimal(sqrt((x * x + y * y + z * z).toDouble()))
         val vel = b.setScale(2, BigDecimal.ROUND_DOWN).toFloat()
@@ -58,7 +63,7 @@ internal class StepDetector(private val stepListener: StepListener) {
             lastVel = vel
 
         val maxVel = 15f
-        val minVel = if(Device.isXiaomi()) 8.5f else 7.5f
+        val minVel = if (Device.isXiaomi()) 8.5f else 7.5f
 
         if (vel < minVel || vel > maxVel) {
             initStepDetector()
@@ -102,7 +107,7 @@ internal class StepDetector(private val stepListener: StepListener) {
         if (model == activityModel || model == RUN_MODEL)
             stepListener.step(1.toLong())
         else {
-            val WAIT_STEPS: Long = 60
+            val WAIT_STEPS: Long = 15
             if (tempSteps >= WAIT_STEPS) {
                 model = RUN_MODEL
                 stepListener.step(1.toLong() + tempSteps)
@@ -118,7 +123,7 @@ internal class StepDetector(private val stepListener: StepListener) {
 
     private fun initThreshold() {
         pos = 0
-        for (i in 0..14)
+        for (i in 0..3)
             fourVels[i] = initVel
 
     }
@@ -142,16 +147,16 @@ internal class StepDetector(private val stepListener: StepListener) {
 
     private fun updatevelThreshold(vel: Float) {
         fourVels[pos++] = vel
-        if (pos == 15)
+        if (pos == 4)
             pos = 0
     }
 
     private fun getvelThreshold(): Float {
         var sum = 0f
-        for (i in 0..14) {
+        for (i in 0..3) {
             sum += fourVels[i]
         }
-        sum = sum / 15
+        sum /= 4
         return sum
     }
 }

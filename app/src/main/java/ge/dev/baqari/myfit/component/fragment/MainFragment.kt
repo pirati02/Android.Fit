@@ -31,11 +31,11 @@ import kotlin.math.roundToInt
 class MainFragment : Fragment() {
 
     private val BATTERY_INGORE_REQUEST = 2048
-    private var numSteps: Double = 0.0
+    private var numSteps: Long = 0L
         set(value) {
             field = value
-            showSteps?.text = value.toLong().toString()
-            progressBar.progress = (value * 100 / 10000).roundToInt()
+            showSteps?.text = value.toString()
+            progressBar.progress = (value.toDouble() * 100 / 10000).roundToInt()
         }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -46,13 +46,15 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         try {
-            numSteps = BaseCalculator.currentSteps(Realm.getDefaultInstance())
+            val cacheSteps = BaseCalculator.currentSteps(Realm.getDefaultInstance()).toLong()
+            if (cacheSteps > 0L)
+                numSteps = cacheSteps
             expandMoreLayout.setOnClickListener {
                 (activity as MainActivity).openDetails()
             }
             startService()
             (activity as MainActivity?)?.onStep = {
-                numSteps = it?.toDouble()!!
+                numSteps = it!!
             }
             (activity as MainActivity?)?.onNotificationStopped = {
                 notificationOffImage.setImageResource(if (it == false) R.drawable.ic_notification_on else R.drawable.ic_notification_off)

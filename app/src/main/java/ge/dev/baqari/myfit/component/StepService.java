@@ -44,11 +44,10 @@ public class StepService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (stepThread == null)
+            stepThread = new StepThread(this);
+        stepThread.run();
         if (intent != null) {
-            if (stepThread == null)
-                stepThread = new StepThread(this);
-            stepThread.run();
-
             if (intent.getAction() != null) {
                 if (intent.getAction().equals(STOP_REMOTELY)) {
                     EventBus.getDefault().post(false);
@@ -66,7 +65,7 @@ public class StepService extends Service {
                                     startPushForeground(step);
                                     startedForeground = true;
                                 }
-                                fireWakeLock();
+                                //fireWakeLock();
                             }
                         });
                         stepThread.invokeOnStep();

@@ -47,8 +47,9 @@ class StepThread(private val context: Context) : SensorEventListener, StepListen
         sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         accel = sensorManager?.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         today = Date().today()?.dayOnly()
-        SessionManager.startSession(0, false)
-        numSteps = BaseCalculator.currentSteps(Realm.getDefaultInstance()).toLong()
+        val cacheSteps = BaseCalculator.currentSteps(Realm.getDefaultInstance()).toLong()
+        if (cacheSteps > 0L)
+            numSteps = cacheSteps
     }
 
     override fun onSensorChanged(sensorEvent: SensorEvent) {
@@ -64,7 +65,7 @@ class StepThread(private val context: Context) : SensorEventListener, StepListen
     override fun step(num: Long) {
         if (today != Date().today()?.dayOnly()) {
             SessionManager.endSession(num)
-            numSteps = 0
+            numSteps = num
         }
         today = Date().today()?.dayOnly()
 
@@ -78,8 +79,11 @@ class StepThread(private val context: Context) : SensorEventListener, StepListen
     }
 
     fun invokeOnStep() {
-        if (numSteps == 0L)
-            numSteps = BaseCalculator.currentSteps(Realm.getDefaultInstance()).toLong()
+        if (numSteps == 0L) {
+            val cacheSteps = BaseCalculator.currentSteps(Realm.getDefaultInstance()).toLong()
+            if (cacheSteps > 0L)
+                numSteps = cacheSteps
+        }
         onStep?.onStep(numSteps)
     }
 
