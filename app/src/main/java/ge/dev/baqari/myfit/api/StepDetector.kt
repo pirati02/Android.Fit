@@ -50,11 +50,10 @@ internal class StepDetector(private val stepListener: StepListener) {
         if (lastX == 0f)
             lastX = x
 
-        if (lastX < 0 && x > 0 || lastX > 0 && x < 0)
+        if (lastX < 0 && x > 0 || lastX > 0 && x < 0){
+            lastX = x
             return
-
-        Log.d("stepdetector", "x : $x, y : $y, z :  $z")
-
+        }
 
         val b = BigDecimal(sqrt((x * x + y * y + z * z).toDouble()))
         val vel = b.setScale(2, BigDecimal.ROUND_DOWN).toFloat()
@@ -63,7 +62,7 @@ internal class StepDetector(private val stepListener: StepListener) {
             lastVel = vel
 
         val maxVel = 15f
-        val minVel = if (Device.isXiaomi()) 8.5f else 7.5f
+        val minVel = if (Device.isXiaomi()) 8f else 7.5f
 
         if (vel < minVel || vel > maxVel) {
             initStepDetector()
